@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Level"
+        android:text="@string/text_level"
         android:textSize="30dp"
         android:id="@+id/text_level"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Complexity"
+        android:text="@string/text_complx"
         android:textSize="30dp"
         android:id="@+id/text_complx"
         android:layout_below="@+id/text_level"
@@ -31,7 +31,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="XX"
+        android:text="@string/text_xx"
         android:id="@+id/text_xx"
         android:textSize="30dp"
         android:layout_alignBottom="@+id/text_level"
@@ -43,7 +43,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="YY"
+        android:text="@string/text_yy"
         android:textSize="30dp"
         android:id="@+id/text_yy"
         android:layout_alignTop="@+id/text_complx"

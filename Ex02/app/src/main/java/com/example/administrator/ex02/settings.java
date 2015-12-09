@@ -26,7 +26,7 @@ public class settings extends AppCompatActivity {
         text_yy = (EditText) findViewById(R.id.text_yy);
 
 
-        
+
     }
 
     @Override

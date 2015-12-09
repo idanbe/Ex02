@@ -10,9 +10,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start"
         android:background="#2f8eff"
         android:id="@+id/button_start"
+        android:text="@string/button_start"
         android:layout_above="@+id/button_red"
         android:layout_alignRight="@+id/textView_resnt"
         android:layout_alignEnd="@+id/textView_resnt"
@@ -22,7 +22,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sttings"
+        android:text="@string/button_sttings"
         android:background="#2f8eff"
         android:id="@+id/button_sttings"
         android:layout_below="@+id/text_time2"
@@ -46,8 +46,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="best result"
         android:id="@+id/textView_best"
+        android:text="@string/textView_best"
         android:layout_marginTop="33dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/textView_resnt"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_time1"
-        android:text="ss:mmm"
+        android:text="@string/text_time1"
         android:layout_alignBottom="@+id/textView_best"
         android:layout_alignRight="@+id/button_sttings"
         android:layout_alignEnd="@+id/button_sttings" />
@@ -65,7 +65,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent result"
+        android:text="@string/textView_resnt"
         android:id="@+id/textView_resnt"
         android:layout_alignTop="@+id/text_time2"
         android:layout_centerHorizontal="true" />
@@ -73,8 +73,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ss:mmm"
         android:id="@+id/text_time2"
+        android:text="@string/text_time2"
         android:layout_below="@+id/text_time1"
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1"
