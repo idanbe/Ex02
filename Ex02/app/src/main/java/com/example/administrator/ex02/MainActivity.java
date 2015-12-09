@@ -1,19 +1,20 @@
 package com.example.administrator.ex02;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button strat,setting;
-
-
-
+   //views
+    private Button strat_button,setting_button,red_butoon;
+    private TextView time1_text,time2_text;
 
 
     @Override
@@ -21,15 +22,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         //init views
-        strat = (Button) findViewById(R.id.button_start);
-        setting = (Button) findViewById(R.id.button_sttings);
+        strat_button = (Button) findViewById(R.id.button_start);
+        setting_button = (Button) findViewById(R.id.button_sttings);
+        red_butoon = (Button) findViewById(R.id.button_red);
+        time1_text = (TextView) findViewById(R.id.text_time1);
+        time2_text = (TextView) findViewById(R.id.text_time2);
 
 
 
-        setting.setOnClickListener(new View.OnClickListener() {
+
+        strat_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        red_butoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //go to settings activity

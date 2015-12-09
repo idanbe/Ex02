@@ -33,7 +33,7 @@
         android:layout_alignLeft="@+id/text_level"
         android:layout_alignStart="@+id/text_level" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="XX"
@@ -45,7 +45,7 @@
         android:layout_marginRight="65dp"
         android:layout_marginEnd="65dp" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="YY"

@@ -4,13 +4,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class settings extends AppCompatActivity {
+
+    //views
+    private EditText text_xx,text_yy;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        //init views
+        text_xx = (EditText) findViewById(R.id.text_xx);
+        text_yy = (EditText) findViewById(R.id.text_yy);
+
+
+        
     }
 
     @Override
