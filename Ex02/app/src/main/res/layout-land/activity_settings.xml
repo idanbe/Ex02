@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#2f8eff"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level"
+        android:textSize="30dp"
+        android:id="@+id/text_level"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="118dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="86dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complexity"
+        android:textSize="30dp"
+        android:id="@+id/text_complx"
+        android:layout_below="@+id/text_level"
+        android:layout_alignLeft="@+id/text_level"
+        android:layout_alignStart="@+id/text_level"
+        android:layout_marginTop="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XX"
+        android:id="@+id/text_xx"
+        android:textSize="30dp"
+        android:layout_alignBottom="@+id/text_level"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="65dp"
+        android:layout_marginEnd="65dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YY"
+        android:textSize="30dp"
+        android:id="@+id/text_yy"
+        android:layout_alignTop="@+id/text_complx"
+        android:layout_alignRight="@+id/text_xx"
+        android:layout_alignEnd="@+id/text_xx" />
+</RelativeLayout>
