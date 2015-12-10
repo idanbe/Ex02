@@ -2,6 +2,7 @@ package com.example.administrator.ex02;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -25,6 +26,9 @@ public class settings extends AppCompatActivity {
         text_xx = (EditText) findViewById(R.id.text_xx);
         text_yy = (EditText) findViewById(R.id.text_yy);
 
+        //limit input
+        text_xx.setFilters(new InputFilter[]{new InputFilterMinMax("1", "10")});
+        text_yy.setFilters(new InputFilter[]{new InputFilterMinMax("0", "4")});
 
 
     }

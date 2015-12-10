@@ -7,9 +7,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_start"
         android:background="#2f8eff"
         android:id="@+id/button_start"
+        android:text="@string/button_start"
         android:layout_marginRight="52dp"
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="29dp"
@@ -20,9 +20,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_sttings"
         android:background="#2f8eff"
         android:id="@+id/button_sttings"
+        android:text="@string/button_sttings"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/button_start"
         android:layout_alignStart="@+id/button_start" />
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_time1"
-        android:text="@string/text_time1"
+        android:hint="@string/text_time1"
         android:layout_alignBottom="@+id/textView_best"
         android:layout_alignRight="@+id/button_sttings"
         android:layout_alignEnd="@+id/button_sttings" />
@@ -61,8 +61,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/textView_resnt"
         android:id="@+id/textView_resnt"
+        android:text="@string/textView_resnt"
         android:layout_above="@+id/button_sttings"
         android:layout_alignLeft="@+id/textView_best"
         android:layout_alignStart="@+id/textView_best"
@@ -71,8 +71,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_time2"
         android:id="@+id/text_time2"
+        android:hint="@string/text_time2"
         android:layout_alignBottom="@+id/textView_resnt"
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1" />

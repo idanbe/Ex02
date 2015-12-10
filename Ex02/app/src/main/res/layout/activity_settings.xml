@@ -36,8 +36,9 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_xx"
         android:id="@+id/text_xx"
+        android:hint="@string/text_xx"
+        android:inputType="number"
         android:textSize="30dp"
         android:layout_alignBottom="@+id/text_level"
         android:layout_alignParentRight="true"
@@ -48,9 +49,10 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_yy"
-        android:textSize="30dp"
         android:id="@+id/text_yy"
+        android:hint="@string/text_yy"
+        android:inputType="number"
+        android:textSize="30dp"
         android:layout_alignTop="@+id/text_complx"
         android:layout_alignRight="@+id/text_xx"
         android:layout_alignEnd="@+id/text_xx" />

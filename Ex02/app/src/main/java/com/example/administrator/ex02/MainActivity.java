@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //setContentView(new MyView(this));
         //init views
         strat_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
