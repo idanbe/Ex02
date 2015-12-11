@@ -14,7 +14,11 @@ public class MainActivity extends AppCompatActivity {
 
    //views
     private Button strat_button,setting_button,red_butoon;
-    private TextView time1_text,time2_text;
+    private TextView text_recent,text_best, time1_text,time2_text;
+    private boolean inPress  =false;
+    private StopWatch stopWatch = new StopWatch(); // init watch
+    SharedPreferences sharedPreferences;
+    static final String text_time1_key ="key1";     // key for shardepre..
 
 
     @Override
@@ -28,13 +32,22 @@ public class MainActivity extends AppCompatActivity {
         red_butoon = (Button) findViewById(R.id.button_red);
         time1_text = (TextView) findViewById(R.id.text_time1);
         time2_text = (TextView) findViewById(R.id.text_time2);
+        text_recent = (TextView) findViewById(R.id.textView_resnt);
+        text_best = (TextView) findViewById(R.id.textView_best);
 
 
+        // create shared pref...
+        sharedPreferences = getPreferences(MODE_PRIVATE);
 
 
         strat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                inPress = true;
+                text_recent.setText("Current time");
+
+
 
             }
         });
@@ -54,7 +67,58 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        text_best.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                time1_text.setText("00:000");
+                //// TODO: clear XX and YY
+            }
+        });
+
+
     }
+
+
+    private void saveData(SharedPreferences sharedPreferences){
+        // create aditor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // add data
+        editor.putString(text_time1_key, time1_text.getText().toString());
+
+        // save data
+        editor.apply();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // check if there is a data
+        if(sharedPreferences != null)
+        {
+            // restore data
+            time1_text.setText(sharedPreferences.getString(text_time1_key ,""));
+
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveData(sharedPreferences);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
