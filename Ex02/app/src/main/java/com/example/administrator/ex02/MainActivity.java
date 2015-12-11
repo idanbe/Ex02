@@ -16,10 +16,15 @@ public class MainActivity extends AppCompatActivity {
     private Button strat_button,setting_button,red_butoon;
     private TextView text_recent,text_best, time1_text,time2_text;
     private boolean inPress  =false;
+    private boolean best_press =false;
     private StopWatch stopWatch = new StopWatch(); // init watch
     SharedPreferences sharedPreferences;
     static final String text_time1_key ="key1";     // key for shardepre..
+    static final String text_time2_key ="key2";
+    static final String key_xx ="key3";
+    static final String str_xx ="xx";
 
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //go to settings activity
-                Intent intent = new Intent(v.getContext(), settings.class);
+                intent = new Intent(v.getContext(), settings.class);
                 startActivity(intent);
             }
         });
@@ -72,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         text_best.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                time1_text.setText("00:000");
+                time1_text.setText("ss:mmm");
+                intent.putExtra(key_xx,str_xx);
                 //// TODO: clear XX and YY
             }
         });
@@ -87,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         // add data
         editor.putString(text_time1_key, time1_text.getText().toString());
+        editor.putString(text_time2_key, time2_text.getText().toString());
 
         // save data
         editor.apply();
@@ -102,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         {
             // restore data
             time1_text.setText(sharedPreferences.getString(text_time1_key ,""));
-
+            time2_text.setText(sharedPreferences.getString(text_time2_key ,""));
         }
     }
 
