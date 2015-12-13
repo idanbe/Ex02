@@ -47,10 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         strat_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                inPress = true;
-                text_recent.setText("Current time");
+            public void onClick(View v)
+            {
+                if(!inPress)
+                {
+                    stopWatch.start();
+                    inPress = true;
+                    text_recent.setText("Current time");
+                }
 
 
 
@@ -59,8 +63,39 @@ public class MainActivity extends AppCompatActivity {
 
         red_butoon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                    if(inPress)//todo stop when prees n time on red (n = level)
+                    {
+                        stopWatch.stop();
+                        inPress=false;
+                        // get time
+                        long time = stopWatch.getTimeMilli();
 
+                        time2_text.setText(Long.toString(time));
+                        int t1;
+                        try
+                        {
+                             t1 = Integer.parseInt(time1_text.getText().toString()); //best time
+                        }
+                        catch (NumberFormatException nfe) //if best time == ss:mmm
+                        {
+                            t1=0;
+                        }
+
+
+                      //  int t1 = Integer.parseInt(time1_text.getText().toString()); //best time
+                        int t2 = Integer.parseInt((time2_text.getText()).toString()); //current time
+
+                        if((t1 > t2) || (t1 == 0))
+                        {
+
+                            time1_text.setText(Long.toString(t2));
+                        }
+
+
+
+                    }
             }
         });
 

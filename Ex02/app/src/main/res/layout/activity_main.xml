@@ -65,6 +65,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="@string/textView_resnt"
         android:id="@+id/textView_resnt"
         android:layout_alignTop="@+id/text_time2"
