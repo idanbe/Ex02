@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +23,14 @@ public class MainActivity extends AppCompatActivity {
     static final String text_time1_key ="key1";     // key for shardepre..
     static final String text_time2_key ="key2";
     static final String key_xx ="key3";
-    static final String str_xx ="xx";
-
+    static final String key_yy ="key4";
+    static final String str_xx ="XX";
+    static final String str_yy ="YY";
+    static final String RECENT ="Recent result";
+    static final String CURRENT ="Current time";
+    static final String str_time1= "ss:mmm";
+    private final String TAG = getClass().getSimpleName();
+    private  int num_press=0;
     private Intent intent;
 
     @Override
@@ -39,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
-
+        best_press=false;
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
@@ -53,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     stopWatch.start();
                     inPress = true;
-                    text_recent.setText("Current time");
+                    text_recent.setText(CURRENT);
                 }
-
-
 
             }
         });
@@ -65,31 +70,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                    if(inPress)//todo stop when prees n time on red (n = level)
+                    int t1,t2;
+
+                    if(inPress)
                     {
-                        stopWatch.stop();
+                        num_press++;
+                        stopWatch.stop();//todo stop when prees n time on red (n = level)
                         inPress=false;
+                        text_recent.setText(RECENT);
                         // get time
                         long time = stopWatch.getTimeMilli();
 
                         time2_text.setText(Long.toString(time));
-                        int t1;
                         try
                         {
-                             t1 = Integer.parseInt(time1_text.getText().toString()); //best time
+                            t1 = Integer.parseInt(time1_text.getText().toString()); //best time
                         }
                         catch (NumberFormatException nfe) //if best time == ss:mmm
                         {
                             t1=0;
                         }
 
-
-                      //  int t1 = Integer.parseInt(time1_text.getText().toString()); //best time
-                        int t2 = Integer.parseInt((time2_text.getText()).toString()); //current time
-
+                        t2 = Integer.parseInt((time2_text.getText()).toString()); //current time
                         if((t1 > t2) || (t1 == 0))
                         {
-
                             time1_text.setText(Long.toString(t2));
                         }
 
@@ -103,8 +107,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //go to settings activity
-                intent = new Intent(v.getContext(), settings.class);
+                if(!best_press) {
+                    intent = new Intent(v.getContext(), settings.class);
+        //            intent.removeExtra(key_xx);
+          //          intent.removeExtra(key_yy);
+
+                    Log.d(TAG, "@@@@@@@@@@@@@@@ ");
+                }
                 startActivity(intent);
+
             }
         });
 
@@ -112,14 +123,22 @@ public class MainActivity extends AppCompatActivity {
         text_best.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                time1_text.setText("ss:mmm");
-                intent.putExtra(key_xx,str_xx);
-                //// TODO: clear XX and YY
+                 time1_text.setText(str_time1);
+                 intent = new Intent(v.getContext(), settings.class);
+                 intent.putExtra(key_xx,str_xx);
+                 intent.putExtra(key_yy,str_yy);
+                 best_press=true;
             }
         });
 
 
+
+
     }
+
+
+
+
 
 
     private void saveData(SharedPreferences sharedPreferences){
@@ -151,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+
         saveData(sharedPreferences);
     }
 
@@ -169,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -183,4 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

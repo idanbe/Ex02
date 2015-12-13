@@ -1,5 +1,6 @@
 package com.example.administrator.ex02;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,16 +20,16 @@ public class settings extends AppCompatActivity {
     static final String text_xx_key ="key1";
     static final String text_yy_key ="key2";
     static final String Rxx ="key3";
+    static final String Ryy ="key4";
     static final String TAG ="debug";
+    private   Bundle bundle;
+    private String bundle_value;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        Bundle bundle = getIntent().getExtras();
-
 
         //init views
         text_xx = (EditText) findViewById(R.id.text_xx);
@@ -38,13 +39,16 @@ public class settings extends AppCompatActivity {
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
+        bundle = getIntent().getExtras();
 
         if(bundle!=null)
         {
-            String value = bundle.getString(Rxx);
-
-
-          //  text_xx.setText(value);
+            bundle_value = bundle.getString(Rxx);
+            text_xx.setHint(bundle_value);
+            bundle_value = bundle.getString(Ryy);
+            text_yy.setHint(bundle_value);
+            //getIntent().removeExtra(Rxx);
+            //getIntent().removeExtra(Ryy);
         }
 
 
@@ -76,8 +80,12 @@ public class settings extends AppCompatActivity {
         if(sharedPreferences != null)
         {
             // restore data
-            text_xx.setText(sharedPreferences.getString(text_xx_key, ""));
-            text_yy.setText(sharedPreferences.getString(text_yy_key ,""));
+            if(bundle==null)
+            {
+                text_xx.setText(sharedPreferences.getString(text_xx_key, ""));
+                text_yy.setText(sharedPreferences.getString(text_yy_key ,""));
+            }
+
         }
     }
 
@@ -85,12 +93,19 @@ public class settings extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         saveData(sharedPreferences);
+
+        Log.d(TAG, "@@@@@onStop ");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-
     }
 
 
