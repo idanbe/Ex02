@@ -2,7 +2,6 @@ package com.example.administrator.ex02;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SyncStatusObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
    //views
-    private Button strat_button,setting_button,red_butoon;
+
     private TextView text_recent,text_best, time1_text,time2_text;
-    private boolean inPress  =false;
-    private boolean best_press =false;
     private StopWatch stopWatch = new StopWatch(); // init watch
     SharedPreferences sharedPreferences;
     static final String text_time1_key ="key1";     // key for shardepre..
@@ -34,14 +30,15 @@ public class MainActivity extends AppCompatActivity {
     static final String RECENT ="Recent result";
     static final String CURRENT ="Current time";
     static final String str_time1= "00:000";
-    private  String level;
-    private  String comlexity;
+    private  String level = "1";
+    private  String complexity = "0";
     private final String TAG = getClass().getSimpleName();
     private  int counterPress=0;
     private Intent intent;
-    private  Bundle bundle;
+    private Bundle bundle;
 
-    AppEntryTimeDAL dal;
+    private  Boolean gameOn = false;
+    private AppEntryTimeDAL dal;
 
     private String formatSSMM(){
         String s = "" ;
@@ -56,99 +53,88 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button start_button,setting_button,red_button;
 
-        strat_button = (Button) findViewById(R.id.button_start);
+        start_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
-        red_butoon = (Button) findViewById(R.id.button_red);
+        red_button = (Button) findViewById(R.id.button_red);
         time1_text = (TextView) findViewById(R.id.text_time1);
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
-        best_press=false;
-
 
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
         // create dal
-        dal = new AppEntryTimeDAL(this);
+        //dal = new AppEntryTimeDAL(this);
 
         bundle = getIntent().getExtras();
 
         Log.d(TAG,"@@@mainActivity");
 
-        if(bundle!=null)
-        {
+        // get complexity and level
+        if(bundle!=null) {
 
-            level  = bundle.getString(Rxx);
-            comlexity =  bundle.getString(Ryy);
-            if (level.contains(""))
-            {
-                level="1";
-            }
-            if (comlexity.contains(""))
-            {
-                comlexity="0";
-            }
-            Log.d(TAG,"@@@_xx:"+ level.toString() );
-            Log.d(TAG, "@@@_yy:" + comlexity.toString());
+            level = bundle.getString(Rxx);
+            complexity = bundle.getString(Ryy);
 
+
+            System.out.println("! level = " + level);
+            System.out.println("! complexity = " + complexity);
         }
 
-        strat_button.setOnClickListener(new View.OnClickListener() {
+        // start button
+        start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(!inPress)
+                if(!gameOn)
                 {
+                    System.out.println("! in start");
                     stopWatch.start();
-                    setting_button.setEnabled(false);
-                    inPress = true;
-                    text_recent.setText("Current time");
+                    gameOn = true;
+                    text_recent.setText(CURRENT);
+                    
                     time1_text.setText(formatSSMM());
                 }
-
-
             }
         });
 
-        red_butoon.setOnClickListener(new View.OnClickListener() {
+
+        // red button
+        red_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                    int t1,t2;
+            public void onClick(View v){
+                System.out.println("! in red button");
+                if(gameOn){
+                    counterPress++;
+                    System.out.println("!!!!" + counterPress);
 
-                    if(inPress)
-                    {
-                        setting_button.setEnabled(true);
-                        counterPress++;
-                        stopWatch.stop();//todo stop when prees n time on red (n = level)
+                    if(counterPress == Integer.parseInt(level) ) {
+                        stopWatch.stop();
+                        gameOn = false;
                         time2_text.setText(formatSSMM());
-                        inPress=false;
                         text_recent.setText(RECENT);
+                        counterPress = 0 ;
 
-                        // get time
-
-                        System.out.println("!!!before");
+                        // record time
                         int index = (time1_text.getText().toString()).indexOf(":");
-                        System.out.println("!!!"+index);
                         int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
-
-
-                        index = time1_text.getText().toString().indexOf(":");
-                        System.out.println("!!!"+index);
-                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0 , index ));
-
                         int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
+
+                        // new time
+                        index = time2_text.getText().toString().indexOf(":");
+                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
                         int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
 
-                        if (s2 > s1 || (s2==s1 && m2 > m1)){
+                        // check if is new record
+                        if (s2 > s1 || (s2 == s1 && m2 > m1)) {
                             time1_text.setText(time2_text.getText().toString());
-                            //appEntryTimeDAL = new AppEntryTimeDAL(this ,Integer.parseInt(level) , comlexity );
                         }
-
                     }
+                }
             }
         });
 
@@ -156,14 +142,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //go to settings activity
-                if(!best_press) {
+                if(!gameOn) {
+                    System.out.println("! in setting");
                     intent = new Intent(v.getContext(), settings.class);
-        //            intent.removeExtra(key_xx);
-          //          intent.removeExtra(key_yy);
-
-                    Log.d(TAG, "@@@@@@@@@@@@@@@ ");
+                    startActivity(intent);
                 }
-                startActivity(intent);
+
 
             }
         });
@@ -172,11 +156,12 @@ public class MainActivity extends AppCompatActivity {
         text_best.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 time1_text.setText(str_time1);
-                 intent = new Intent(v.getContext(), settings.class);
-                 intent.putExtra(key_xx,str_xx);
-                 intent.putExtra(key_yy,str_yy);
-                 best_press=true;
+                if(!gameOn) {
+                    time1_text.setText(str_time1);
+                    intent = new Intent(v.getContext(), settings.class);
+                    intent.putExtra(key_xx, str_xx);
+                    intent.putExtra(key_yy, str_yy);
+                }
             }
         });
 
@@ -191,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void saveData(SharedPreferences sharedPreferences){
-        // create aditor
+        // create Editor
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // add data

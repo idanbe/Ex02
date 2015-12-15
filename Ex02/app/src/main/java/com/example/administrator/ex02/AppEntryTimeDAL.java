@@ -18,6 +18,8 @@ public class AppEntryTimeDAL {
         helper = new AppEntryTimeDBHelper(context);
     }
 
+
+    // TODO : remove this function  , only for test
     public  void removeAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(AppEntryTimeContract.AppEntryTime.TABLE_NAME, null, null);
@@ -42,7 +44,7 @@ public class AppEntryTimeDAL {
 
 
 
-    // not complite
+    // upDate
     public void upDateEntryTime(int complexity , int level , String time){
         SQLiteDatabase db =helper.getReadableDatabase();
 
@@ -70,7 +72,8 @@ public class AppEntryTimeDAL {
     }
 
 
-    ///
+    // TODO : remove this function , only for test
+    // write all DB in ArrayList
     public ArrayList getAllEntryTimesList(){
 
         ArrayList entryTimes = new ArrayList();
