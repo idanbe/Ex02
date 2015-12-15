@@ -33,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private  int num_press=0;
     private Intent intent;
 
+    private String formatSSMM(){
+        String s = "" ;
+        s = Integer.toString((int)stopWatch.getTimeSecs());
+        s += ":";
+        s +=Integer.toString((int)stopWatch.getTimeSecs());
+        return s ;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
