@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
    //views
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private  Bundle bundle;
 
-    //private  AppEntryTimeDAL  appEntryTimeDAL;
+    AppEntryTimeDAL dal;
 
     private String formatSSMM(){
         String s = "" ;
@@ -54,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(new MyView(this));
-        //init views
+
         strat_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
         red_butoon = (Button) findViewById(R.id.button_red);
@@ -65,8 +66,13 @@ public class MainActivity extends AppCompatActivity {
         text_best = (TextView) findViewById(R.id.textView_best);
         best_press=false;
 
+
+
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
+
+        // create dal
+        dal = new AppEntryTimeDAL(this);
 
         bundle = getIntent().getExtras();
 
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 comlexity="0";
             }
             Log.d(TAG,"@@@_xx:"+ level.toString() );
-            Log.d(TAG,"@@@_yy:"+ comlexity.toString() );
+            Log.d(TAG, "@@@_yy:" + comlexity.toString());
 
         }
 

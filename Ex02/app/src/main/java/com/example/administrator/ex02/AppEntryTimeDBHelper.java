@@ -21,13 +21,9 @@ public class AppEntryTimeDBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "CREATE TABLE " + AppEntryTimeContract.AppEntryTime.TABLE_NAME  + " ( " +
-                        AppEntryTimeContract.AppEntryTime._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        AppEntryTimeContract.AppEntryTime.TIME0 + " TEXT" +
-                        AppEntryTimeContract.AppEntryTime.TIME1 + " TEXT" +
-                        AppEntryTimeContract.AppEntryTime.TIME2 + " TEXT" +
-                        AppEntryTimeContract.AppEntryTime.TIME3 + " TEXT" +
-                        AppEntryTimeContract.AppEntryTime.TIME4 + " TEXT" +
-                        ");"
+                        AppEntryTimeContract.AppEntryTime.COMPLEXITY + " INTEGER," +
+                        AppEntryTimeContract.AppEntryTime.LEVEL + " INTEGER," +
+                        AppEntryTimeContract.AppEntryTime.TIME + " TEXT" + ");"
         );
     }
 
