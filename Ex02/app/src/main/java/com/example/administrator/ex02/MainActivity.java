@@ -2,6 +2,7 @@ package com.example.administrator.ex02;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SyncStatusObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,20 +25,27 @@ public class MainActivity extends AppCompatActivity {
     static final String text_time2_key ="key2";
     static final String key_xx ="key3";
     static final String key_yy ="key4";
+    static final String Rxx ="key5";
+    static final String Ryy ="key6";
     static final String str_xx ="XX";
     static final String str_yy ="YY";
     static final String RECENT ="Recent result";
     static final String CURRENT ="Current time";
-    static final String str_time1= "ss:mmm";
+    static final String str_time1= "00:000";
+    private  String level;
+    private  String comlexity;
     private final String TAG = getClass().getSimpleName();
-    private  int num_press=0;
+    private  int counterPress=0;
     private Intent intent;
+    private  Bundle bundle;
+
+    //private  AppEntryTimeDAL  appEntryTimeDAL;
 
     private String formatSSMM(){
         String s = "" ;
         s = Integer.toString((int)stopWatch.getTimeSecs());
         s += ":";
-        s +=Integer.toString((int)stopWatch.getTimeSecs());
+        s +=Integer.toString((int)stopWatch.getTimeMilli() % 1000 );
         return s ;
     }
 
@@ -60,6 +68,27 @@ public class MainActivity extends AppCompatActivity {
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
+        bundle = getIntent().getExtras();
+
+        Log.d(TAG,"@@@mainActivity");
+
+        if(bundle!=null)
+        {
+
+            level  = bundle.getString(Rxx);
+            comlexity =  bundle.getString(Ryy);
+            if (level.contains(""))
+            {
+                level="1";
+            }
+            if (comlexity.contains(""))
+            {
+                comlexity="0";
+            }
+            Log.d(TAG,"@@@_xx:"+ level.toString() );
+            Log.d(TAG,"@@@_yy:"+ comlexity.toString() );
+
+        }
 
         strat_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 if(!inPress)
                 {
                     stopWatch.start();
+                    setting_button.setEnabled(false);
                     inPress = true;
-                    text_recent.setText(CURRENT);
+                    text_recent.setText("Current time");
+                    time1_text.setText(formatSSMM());
                 }
+
 
             }
         });
@@ -83,30 +115,32 @@ public class MainActivity extends AppCompatActivity {
 
                     if(inPress)
                     {
-                        num_press++;
+                        setting_button.setEnabled(true);
+                        counterPress++;
                         stopWatch.stop();//todo stop when prees n time on red (n = level)
+                        time2_text.setText(formatSSMM());
                         inPress=false;
                         text_recent.setText(RECENT);
+
                         // get time
-                        long time = stopWatch.getTimeMilli();
 
-                        time2_text.setText(Long.toString(time));
-                        try
-                        {
-                            t1 = Integer.parseInt(time1_text.getText().toString()); //best time
+                        System.out.println("!!!before");
+                        int index = (time1_text.getText().toString()).indexOf(":");
+                        System.out.println("!!!"+index);
+                        int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
+
+
+                        index = time1_text.getText().toString().indexOf(":");
+                        System.out.println("!!!"+index);
+                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0 , index ));
+
+                        int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
+                        int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
+
+                        if (s2 > s1 || (s2==s1 && m2 > m1)){
+                            time1_text.setText(time2_text.getText().toString());
+                            //appEntryTimeDAL = new AppEntryTimeDAL(this ,Integer.parseInt(level) , comlexity );
                         }
-                        catch (NumberFormatException nfe) //if best time == ss:mmm
-                        {
-                            t1=0;
-                        }
-
-                        t2 = Integer.parseInt((time2_text.getText()).toString()); //current time
-                        if((t1 > t2) || (t1 == 0))
-                        {
-                            time1_text.setText(Long.toString(t2));
-                        }
-
-
 
                     }
             }

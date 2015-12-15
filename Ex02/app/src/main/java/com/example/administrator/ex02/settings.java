@@ -15,15 +15,18 @@ import android.widget.TextView;
 public class settings extends AppCompatActivity {
 
     //views
-    private EditText text_xx,text_yy;
+    private EditText text_xx ,text_yy;
     SharedPreferences sharedPreferences;
     static final String text_xx_key ="key1";
     static final String text_yy_key ="key2";
     static final String Rxx ="key3";
     static final String Ryy ="key4";
+    static final String Txx ="key5";
+    static final String Tyy ="key6";
     static final String TAG ="debug";
     private   Bundle bundle;
     private String bundle_value;
+    private Intent intent;
 
 
     @Override
@@ -97,11 +100,16 @@ public class settings extends AppCompatActivity {
         Log.d(TAG, "@@@@@onStop ");
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        intent = new Intent(this,MainActivity.class);
+        intent.putExtra(Txx, text_xx.getText().toString());
+        intent.putExtra(Tyy, text_yy.getText().toString());
+        startActivity(intent);
     }
+
 
     @Override
     protected void onPause(){
