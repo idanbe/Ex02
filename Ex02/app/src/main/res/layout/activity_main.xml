@@ -14,6 +14,7 @@
         android:id="@+id/button_start"
         android:text="@string/button_start"
         android:layout_above="@+id/button_red"
+        android:layout_marginBottom="10dp"
         android:layout_alignRight="@+id/textView_resnt"
         android:layout_alignEnd="@+id/textView_resnt"
         android:layout_marginRight="28dp"
@@ -25,6 +26,7 @@
         android:text="@string/button_sttings"
         android:background="#2f8eff"
         android:id="@+id/button_sttings"
+        android:layout_marginBottom="10dp"
         android:layout_below="@+id/text_time2"
         android:layout_toRightOf="@+id/textView_resnt"
         android:layout_toEndOf="@+id/textView_resnt"
@@ -80,5 +82,18 @@
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1"
         android:layout_marginTop="27dp" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#44ff99"
+        android:layout_below="@+id/button_start"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
 
 </RelativeLayout>

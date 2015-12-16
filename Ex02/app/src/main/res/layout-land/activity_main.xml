@@ -77,4 +77,18 @@
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#44ff99"
+        android:layout_toStartOf="@+id/textView_best"
+        android:layout_alignRight="@+id/button_red"
+        android:layout_alignEnd="@+id/button_red" />
+
+
+
+
+
+
+
 </RelativeLayout>
