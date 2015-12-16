@@ -4,24 +4,23 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.Random;
 
 /**
  * Created by Administrator on 12/10/2015.
  */
 public class MyView extends View {
 
-    private int right,top,width,height;
     private Paint paint;
+    private float top, right, width, height;
 
-    private  void init(AttributeSet attrs,int defStyle)
-    {
-        paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStrokeWidth(10);
-        paint.setStyle(Paint.Style.STROKE);
-    }
+    private Path path;
+    private Random random;
 
     public MyView(Context context) {
         super(context);
@@ -38,11 +37,22 @@ public class MyView extends View {
         init(attrs, defStyle);
     }
 
+    private void init(AttributeSet attrs, int defStyle) {
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(10);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        path = new Path();
+
+        random = new Random(System.currentTimeMillis());
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        super.onSizeChanged(w, h, oldw, oldh);
+
         right = getPaddingRight();
         top = getPaddingTop();
         width = w - (getPaddingLeft() + getPaddingRight());
@@ -50,14 +60,26 @@ public class MyView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-     //   paint.setStyle(Paint.Style.FILL);
-      //  canvas.drawCircle(300, 300, 50, paint);
-        //drawCircle(cx, cy, radius, paint)
-
-
+        //canvas.drawColor(Color.BLUE);
+        canvas.drawCircle(200, 200, 100, paint);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+        }
+        return true;
+    }
+
+
+
 }
