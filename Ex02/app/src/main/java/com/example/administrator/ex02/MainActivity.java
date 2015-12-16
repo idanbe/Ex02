@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean best_presed=false;
     private  Boolean gameOn = false;
     private AppEntryTimeDAL dal;
+    private  GameFragment fragment ;
 
     private String formatSSMM(){
         String s = "" ;
@@ -74,6 +76,19 @@ public class MainActivity extends AppCompatActivity {
 
         // create dal
         //dal = new AppEntryTimeDAL(this);
+
+        FrameLayout container = (FrameLayout)findViewById(R.id.fragment);
+
+        fragment = new GameFragment();
+        getSupportFragmentManager().beginTransaction().replace(container.getId() , fragment , "TAG").addToBackStack(null).commit();
+
+
+
+
+
+
+
+
 
         bundle = getIntent().getExtras();
 
