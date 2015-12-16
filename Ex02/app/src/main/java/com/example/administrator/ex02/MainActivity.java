@@ -2,6 +2,7 @@ package com.example.administrator.ex02;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     static final String str_yy ="YY";
     static final String RECENT ="Recent result";
     static final String CURRENT ="Current time";
-    static final String str_time1= "00:000";
+    static final String str_time1= "00:00";
     private  String level = "1";
     private  String complexity = "0";
     private final String TAG = getClass().getSimpleName();
@@ -42,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String formatSSMM(){
         String s = "" ;
-        s = Integer.toString((int)stopWatch.getTimeSecs());
+        s = Integer.toString((int)stopWatch.getTimeSecs() );
         s += ":";
-        s +=Integer.toString((int)stopWatch.getTimeMilli() % 1000 );
+        s +=Integer.toString((int)stopWatch.getTimeMilli() % 100 );
         return s ;
     }
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button start_button,setting_button,red_button;
 
         start_button = (Button) findViewById(R.id.button_start);
@@ -96,8 +101,27 @@ public class MainActivity extends AppCompatActivity {
                     stopWatch.start();
                     gameOn = true;
                     text_recent.setText(CURRENT);
-                    
-                    time1_text.setText(formatSSMM());
+                    /*AsyncTask as = new AsyncTask() {
+                        @Override
+                        protected void onProgressUpdate(Object[] values) {
+                            time2_text.setText(formatSSMM());
+                        }
+
+                        @Override
+                        protected String doInBackground(Object[] params) {
+                            try {
+                                Thread.sleep(10, 10);
+
+                            }
+                            catch (Exception e){
+
+                            }
+                            return null;
+                        }
+                    };
+                    as.execute();*/
+
+                    time2_text.setText(formatSSMM());
                 }
             }
         });
@@ -130,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
 
                         // check if is new record
-                        if (s2 > s1 || (s2 == s1 && m2 > m1)) {
+                        if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
                             time1_text.setText(time2_text.getText().toString());
                         }
                     }
@@ -169,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
 
@@ -245,4 +267,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+/*******************************************************************/
+
 }
+
