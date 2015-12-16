@@ -1,10 +1,12 @@
 package com.example.administrator.ex02;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,13 +20,18 @@ public class MyView extends View {
 
     private Paint paint;
     private float top, right, width, height;
+    private float top_rect=600, right_rect=550,left_rect=200,bottom_rect=725;
+    private float cx=200,cy=200,radyus=100;
 
     private Path path;
     private Random random;
 
+
+
     public MyView(Context context) {
         super(context);
         init(null, 0);
+
     }
 
     public MyView(Context context, AttributeSet attrs) {
@@ -62,8 +69,10 @@ public class MyView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //canvas.drawColor(Color.BLUE);
-        canvas.drawCircle(200, 200, 100, paint);
+
+        canvas.drawRect(left_rect,top_rect,right_rect,bottom_rect,paint);
+        //todo draw n circle (n=complixtiy)
+        canvas.drawCircle(cx,cy,radyus,paint);
     }
 
     @Override

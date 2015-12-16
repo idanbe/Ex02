@@ -83,13 +83,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(container.getId() , fragment , "TAG").addToBackStack(null).commit();
 
 
-
-
-
-
-
-
-
         bundle = getIntent().getExtras();
 
         Log.d(TAG,"@@@mainActivity");
