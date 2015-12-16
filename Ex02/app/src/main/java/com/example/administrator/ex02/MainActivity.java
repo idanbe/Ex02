@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private  int counterPress=0;
     private Intent intent;
     private Bundle bundle;
-
+    private boolean best_presed=false;
     private  Boolean gameOn = false;
     private AppEntryTimeDAL dal;
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
-
+        best_presed=false;
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
@@ -168,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 //go to settings activity
                 if(!gameOn) {
                     System.out.println("! in setting");
-                    intent = new Intent(v.getContext(), settings.class);
+                    if(!best_presed) {
+                        intent = new Intent(v.getContext(), settings.class);
+                    }
                     startActivity(intent);
                 }
 
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(v.getContext(), settings.class);
                     intent.putExtra(key_xx, str_xx);
                     intent.putExtra(key_yy, str_yy);
+                    best_presed=true;
                 }
             }
         });
