@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -75,7 +76,34 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
         // create dal
-        //dal = new AppEntryTimeDAL(this);
+        dal = new AppEntryTimeDAL(this);
+
+        dal.removeAll();
+
+        dal.addTime(0, 1, "01:00");
+        ArrayList arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
+        dal.addTime(0, 1, "02:00");
+        arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
+        dal.addTime(0, 2, "10:00");
+        arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
+        dal.addTime(0, 2, "11:00");
+        arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
+        dal.addTime(1, 2, "20:00");
+        arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
+        dal.addTime(13, 1, "30:00");
+        arrayList = dal.getDb();
+        System.out.println("!" + arrayList.toString());
+
 
         FrameLayout container = (FrameLayout)findViewById(R.id.fragment);
 
