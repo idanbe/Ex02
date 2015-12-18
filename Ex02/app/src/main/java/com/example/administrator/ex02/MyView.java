@@ -20,12 +20,14 @@ public class MyView extends View {
 
     private Paint paint;
     private float top, right, width, height;
-    private float top_rect=600, right_rect=550,left_rect=200,bottom_rect=725;
-    private float cx=200,cy=200,radyus=100;
+    private float top_rect=0, right_rect=250,left_rect=0,bottom_rect=125;
+    private float cx,cy,radyus=50;
+    private int rect_x,rect_y;
 
     private Path path;
     private Random random;
-
+    private  String level = "1";
+    private  String complexity = "3";
 
 
     public MyView(Context context) {
@@ -53,7 +55,7 @@ public class MyView extends View {
 
         path = new Path();
 
-        random = new Random(System.currentTimeMillis());
+        random = new Random();
     }
 
     @Override
@@ -70,9 +72,34 @@ public class MyView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(left_rect,top_rect,right_rect,bottom_rect,paint);
-        //todo draw n circle (n=complixtiy)
-        canvas.drawCircle(cx,cy,radyus,paint);
+        rect_x = random.nextInt(getWidth());
+        while((rect_x+left_rect<getLeft()) || (rect_x+right_rect>getRight()))
+        {
+            rect_x = random.nextInt(getWidth());
+        }
+        rect_y = random.nextInt(getBottom());
+        while ((rect_y+top_rect<getTop())||(rect_y+bottom_rect>getBottom()))
+        {
+            rect_y = random.nextInt(getBottom());
+        }
+
+        canvas.drawRect(left_rect+rect_x, top_rect+rect_y, right_rect+rect_x, bottom_rect+rect_y, paint);
+
+        for (int i=0;i< Integer.parseInt(complexity);i++) {
+            cx = random.nextInt(getWidth());
+            while ((cx-radyus<getLeft())||(cx+radyus>getRight()))
+            {
+                cx = random.nextInt(getWidth());
+            }
+            cy = random.nextInt(getBottom());
+            while ((cy-radyus<getTop())||(cy+radyus>getBottom()))
+            {
+                cy = random.nextInt(getBottom());
+            }
+
+            canvas.drawCircle(cx, cy, radyus, paint);
+        }
+
     }
 
     @Override
