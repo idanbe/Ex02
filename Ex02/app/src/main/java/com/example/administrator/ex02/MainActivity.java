@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -52,15 +53,34 @@ public class MainActivity extends AppCompatActivity {
     private boolean best_presed = false;
     private Boolean gameOn = false;
     private AppEntryTimeDAL dal;
+    public long startTime = 0;
+    public long stopTime = 0;
+    final int REFRESH = 10;
+    /*CostomView costomView = new CostomView(this);*/
+    View view ;
+
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopTime = System.currentTimeMillis() ;
+            long timeInMilli = stopTime - startTime;
+            int seconds = ((int)(timeInMilli/1000))%60;
+
+            time2_text.setText(String.format("%02d:%02d", seconds, timeInMilli % 100));
+            timerHandler.postDelayed( this , REFRESH);
+        }
+    };
 
 
-    private String formatSSMM() {
+    /*private String formatSSMM() {
         String s = "";
         s = Integer.toString((int) stopWatch.getTimeSecs());
         s += ":";
         s += Integer.toString((int) stopWatch.getTimeMilli() % 100);
         return s;
-    }
+    }*/
+
 
 
     @Override
@@ -77,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
+        view = findViewById(R.id.view);
         best_presed = false;
+
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
@@ -135,33 +157,46 @@ public class MainActivity extends AppCompatActivity {
                 if (!gameOn) {
                     System.out.println("! in start");
                     stopWatch.start();
+                    startTime = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 0);
                     gameOn = true;
                     text_recent.setText(CURRENT);
-                    /*AsyncTask as = new AsyncTask() {
-                        @Override
-                        protected void onProgressUpdate(Object[] values) {
-                            time2_text.setText(formatSSMM());
-                        }
-
-                        @Override
-                        protected String doInBackground(Object[] params) {
-                            try {
-                                Thread.sleep(10, 10);
-
-                            }
-                            catch (Exception e){
-
-                            }
-                            return null;
-                        }
-                    };
-                    as.execute();*/
-
-                    time2_text.setText(formatSSMM());
                 }
             }
         });
 
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gameOn) {
+                    counterPress++;
+                    System.out.println("!!!!" + counterPress);
+
+                    if (counterPress == Integer.parseInt(level)) {
+                        stopWatch.stop();
+                        gameOn = false;
+                        text_recent.setText(RECENT);
+                        counterPress = 0;
+
+                        // record time
+                        int index = (time1_text.getText().toString()).indexOf(":");
+                        int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
+                        int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
+
+                        // new time
+                        index = time2_text.getText().toString().indexOf(":");
+                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
+                        int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
+
+                        // check if is new record
+                        if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
+                            time1_text.setText(time2_text.getText().toString());
+                        }
+                    }
+                }
+            }
+        });
         /*
         // red button
         red_button.setOnClickListener(new View.OnClickListener() {

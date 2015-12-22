@@ -48,4 +48,19 @@ public class StopWatch
         return elapsed;
     }
 
+    public String getTime(){
+        long time ;
+        String s ="";
+        if (running) {
+            time = System.currentTimeMillis();
+        }
+        else {
+            time = stopTime;
+        }
+        s = Long.toString((time - startTime) / 1000) + ":" + Long.toString((time - startTime)%100) ;
+        //System.out.println("!!s = "+ s);
+        return s ;
+
+    }
+
 }
