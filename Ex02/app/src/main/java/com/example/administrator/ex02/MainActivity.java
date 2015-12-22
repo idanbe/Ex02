@@ -27,39 +27,39 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-   //views
+    //views
 
-    private TextView text_recent,text_best, time1_text,time2_text;
+    private TextView text_recent, text_best, time1_text, time2_text;
     private StopWatch stopWatch = new StopWatch(); // init watch
     SharedPreferences sharedPreferences;
-    static final String text_time1_key ="key1";     // key for shardepre..
-    static final String text_time2_key ="key2";
-    static final String key_xx ="key3";
-    static final String key_yy ="key4";
-    static final String Rxx ="key5";
-    static final String Ryy ="key6";
-    static final String str_xx ="XX";
-    static final String str_yy ="YY";
-    static final String RECENT ="Recent result";
-    static final String CURRENT ="Current time";
-    static final String str_time1= "00:00";
-    static   String level = "1";
-    static   String complexity = "0";
+    static final String text_time1_key = "key1";     // key for shardepre..
+    static final String text_time2_key = "key2";
+    static final String key_xx = "key3";
+    static final String key_yy = "key4";
+    static final String Rxx = "key5";
+    static final String Ryy = "key6";
+    static final String str_xx = "XX";
+    static final String str_yy = "YY";
+    static final String RECENT = "Recent result";
+    static final String CURRENT = "Current time";
+    static final String str_time1 = "00:00";
+    static String level = "1";
+    static String complexity = "0";
     private final String TAG = getClass().getSimpleName();
-    private  int counterPress=0;
+    private int counterPress = 0;
     private Intent intent;
     private Bundle bundle;
-    private boolean best_presed=false;
-    private  Boolean gameOn = false;
+    private boolean best_presed = false;
+    private Boolean gameOn = false;
     private AppEntryTimeDAL dal;
-    private  GameFragment fragment ;
 
-    private String formatSSMM(){
-        String s = "" ;
-        s = Integer.toString((int)stopWatch.getTimeSecs() );
+
+    private String formatSSMM() {
+        String s = "";
+        s = Integer.toString((int) stopWatch.getTimeSecs());
         s += ":";
-        s +=Integer.toString((int)stopWatch.getTimeMilli() % 100 );
-        return s ;
+        s += Integer.toString((int) stopWatch.getTimeMilli() % 100);
+        return s;
     }
 
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button start_button,setting_button,red_button;
+        Button start_button, setting_button, red_button;
 
         start_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
@@ -77,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
-        best_presed=false;
+        best_presed = false;
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
+        /*
         // create dal
         dal = new AppEntryTimeDAL(this);
 
@@ -111,19 +112,13 @@ public class MainActivity extends AppCompatActivity {
         arrayList = dal.getDb();
         System.out.println("!" + arrayList.toString());
 
-
-        FrameLayout container = (FrameLayout)findViewById(R.id.fragment);
-
-        fragment = new GameFragment();
-        getSupportFragmentManager().beginTransaction().replace(container.getId() , fragment , "TAG").addToBackStack(null).commit();
-
-
+        /*/
         bundle = getIntent().getExtras();
 
-        Log.d(TAG,"@@@mainActivity");
+        Log.d(TAG, "@@@mainActivity");
 
         // get complexity and level
-        if(bundle!=null) {
+        if (bundle != null) {
 
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
@@ -136,10 +131,8 @@ public class MainActivity extends AppCompatActivity {
         // start button
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(!gameOn)
-                {
+            public void onClick(View v) {
+                if (!gameOn) {
                     System.out.println("! in start");
                     stopWatch.start();
                     gameOn = true;
@@ -169,22 +162,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        /*
         // red button
         red_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 System.out.println("! in red button");
-                if(gameOn){
+                if (gameOn) {
                     counterPress++;
                     System.out.println("!!!!" + counterPress);
 
-                    if(counterPress == Integer.parseInt(level) ) {
+                    if (counterPress == Integer.parseInt(level)) {
                         stopWatch.stop();
                         gameOn = false;
                         time2_text.setText(formatSSMM());
                         text_recent.setText(RECENT);
-                        counterPress = 0 ;
+                        counterPress = 0;
 
                         // record time
                         int index = (time1_text.getText().toString()).indexOf(":");
@@ -204,14 +197,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /*/
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //go to settings activity
-                if(!gameOn) {
+                if (!gameOn) {
                     System.out.println("! in setting");
-                    if(!best_presed) {
+                    if (!best_presed) {
                         intent = new Intent(v.getContext(), settings.class);
                     }
                     startActivity(intent);
@@ -225,25 +218,21 @@ public class MainActivity extends AppCompatActivity {
         text_best.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!gameOn) {
+                if (!gameOn) {
                     time1_text.setText(str_time1);
                     intent = new Intent(v.getContext(), settings.class);
                     intent.putExtra(key_xx, str_xx);
                     intent.putExtra(key_yy, str_yy);
-                    best_presed=true;
+                    best_presed = true;
                 }
             }
         });
 
 
-
-
     }
 
 
-
-
-    private void saveData(SharedPreferences sharedPreferences){
+    private void saveData(SharedPreferences sharedPreferences) {
         // create Editor
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -261,11 +250,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // check if there is a data
-        if(sharedPreferences != null)
-        {
+        if (sharedPreferences != null) {
             // restore data
-            time1_text.setText(sharedPreferences.getString(text_time1_key ,""));
-            time2_text.setText(sharedPreferences.getString(text_time2_key ,""));
+            time1_text.setText(sharedPreferences.getString(text_time1_key, ""));
+            time2_text.setText(sharedPreferences.getString(text_time2_key, ""));
         }
     }
 
@@ -278,11 +266,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
     }
-
 
 
     @Override
@@ -291,10 +278,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
-
 
 
     @Override
@@ -311,8 +294,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-/*******************************************************************/
-
 }

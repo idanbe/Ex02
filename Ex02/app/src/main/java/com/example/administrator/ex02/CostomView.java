@@ -1,20 +1,22 @@
 package com.example.administrator.ex02;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.Drawable;
+import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Random;
 
-/**
- * Created by Administrator on 12/22/2015.
- */
-class MyView extends View {
+
+public class CostomView extends View {
 
     private Paint paint;
     private float top, right, width, height;
@@ -27,18 +29,18 @@ class MyView extends View {
     private int[] Arrcx = new int[4];
     private int[] Arrcy = new int[4];
 
-    public MyView(Context context) {
+    public CostomView(Context context) {
         super(context);
         init(null, 0);
 
     }
 
-    public MyView(Context context, AttributeSet attrs) {
+    public CostomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public MyView(Context context, AttributeSet attrs, int defStyle) {
+    public CostomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -68,23 +70,22 @@ class MyView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
-
         for (i=0;i<4;i++)
         {
             Arrcx[i]=0;
             Arrcy[i]=0;
         }
 
-        rect_x = random.nextInt(getWidth());
-        while((rect_x+left_rect<getLeft()) || (rect_x+right_rect>getRight()))
+        rect_x = random.nextInt((int)width);
+        while((rect_x)<getLeft()|| ((rect_x+right_rect)>getRight()))
+          {
+             rect_x = random.nextInt((int)width);
+          }
+        rect_y =random.nextInt((int)height);
+
+        while (((rect_y+bottom_rect)<getPaddingTop()))
         {
-            rect_x = random.nextInt(getWidth());
-        }
-        rect_y = random.nextInt(getBottom());
-        while ((rect_y+top_rect<getTop())||(rect_y+bottom_rect>getBottom()))
-        {
-            rect_y = random.nextInt(getBottom());
+            rect_y = random.nextInt((int)height);
         }
 
 
@@ -92,14 +93,14 @@ class MyView extends View {
 
         for (i=0;i< Integer.parseInt(MainActivity.complexity);i++) {
             cx = random.nextInt(getWidth());
-            while ((cx-radyus<getLeft())||(cx+radyus>getRight()))
+            while (((cx-radyus)<getLeft())||((cx+radyus)>getRight()))
             {
                 cx = random.nextInt(getWidth());
             }
-            cy = random.nextInt(getBottom());
-            while ((cy-radyus<getTop())||(cy+radyus>getBottom()))
+            cy = random.nextInt((int)height);
+            while (((cy-radyus)>getTop())||((cy+radyus)<getBottom()))
             {
-                cy = random.nextInt(getBottom());
+                cy = random.nextInt((int)height);
             }
 
             canvas.drawCircle(cx, cy, radyus, paint);
@@ -129,6 +130,14 @@ class MyView extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
 
+                if((event.getX()>=(rect_x+left_rect))&&((event.getX()<=(rect_x+right_rect))))
+                {
+                    if ((event.getY()>=(rect_y+top_rect))&&(event.getY()<=(rect_y+bottom_rect)))
+                    {
+                        Log.d("@@@3", "red buton is toch");
+
+                    }
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
@@ -139,6 +148,4 @@ class MyView extends View {
     }
 
 
-
 }
-

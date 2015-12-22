@@ -13,12 +13,9 @@
         android:background="#2f8eff"
         android:id="@+id/button_start"
         android:text="@string/button_start"
-        android:layout_above="@+id/button_red"
-        android:layout_marginBottom="10dp"
-        android:layout_alignRight="@+id/textView_resnt"
-        android:layout_alignEnd="@+id/textView_resnt"
-        android:layout_marginRight="28dp"
-        android:layout_marginEnd="28dp" />
+        android:layout_alignTop="@+id/button_sttings"
+        android:layout_alignRight="@+id/textView_best"
+        android:layout_alignEnd="@+id/textView_best" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,17 +31,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="61dp" />
 
-    <Button
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="100dp"
-        android:id="@+id/button_red"
-        android:background="#FF0000"
-        android:layout_marginTop="86dp"
-        android:layout_below="@+id/button_sttings"
-        android:layout_alignRight="@+id/button_sttings"
-        android:layout_alignEnd="@+id/button_sttings" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,12 +70,15 @@
         android:layout_alignStart="@+id/text_time1"
         android:layout_marginTop="27dp" />
 
-    <com.example.administrator.ex02.MyView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
+    <com.example.administrator.ex02.CostomView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#123456"
+        android:id="@+id/view"
+        android:layout_below="@+id/button_start"
+        />
+
 
 
 

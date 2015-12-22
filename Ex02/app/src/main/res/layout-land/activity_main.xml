@@ -79,13 +79,6 @@
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1" />
 
-    <FrameLayout
-        android:id="@+id/fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/textView_best"
-        android:layout_toStartOf="@+id/textView_best" />
 
 
 
