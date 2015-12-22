@@ -1,29 +1,18 @@
 package com.example.administrator.ex02;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     //views
 
     private TextView text_recent, text_best, time1_text, time2_text;
-    private StopWatch stopWatch = new StopWatch(); // init watch
     SharedPreferences sharedPreferences;
     static final String text_time1_key = "key1";     // key for shardepre..
     static final String text_time2_key = "key2";
@@ -56,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public long startTime = 0;
     public long stopTime = 0;
     final int REFRESH = 10;
-    /*CostomView costomView = new CostomView(this);*/
+
     View view ;
 
     Handler timerHandler = new Handler();
@@ -71,15 +59,6 @@ public class MainActivity extends AppCompatActivity {
             timerHandler.postDelayed( this , REFRESH);
         }
     };
-
-
-    /*private String formatSSMM() {
-        String s = "";
-        s = Integer.toString((int) stopWatch.getTimeSecs());
-        s += ":";
-        s += Integer.toString((int) stopWatch.getTimeMilli() % 100);
-        return s;
-    }*/
 
 
 
@@ -104,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
-        /*
+
         // create dal
         dal = new AppEntryTimeDAL(this);
 
@@ -134,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         arrayList = dal.getDb();
         System.out.println("!" + arrayList.toString());
 
-        /*/
+
         bundle = getIntent().getExtras();
 
         Log.d(TAG, "@@@mainActivity");
@@ -156,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!gameOn) {
                     System.out.println("! in start");
-                    stopWatch.start();
                     startTime = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 0);
                     gameOn = true;
@@ -174,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("!!!!" + counterPress);
 
                     if (counterPress == Integer.parseInt(level)) {
-                        stopWatch.stop();
                         gameOn = false;
                         text_recent.setText(RECENT);
                         counterPress = 0;
