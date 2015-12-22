@@ -187,42 +187,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        // red button
-        red_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("! in red button");
-                if (gameOn) {
-                    counterPress++;
-                    System.out.println("!!!!" + counterPress);
-
-                    if (counterPress == Integer.parseInt(level)) {
-                        stopWatch.stop();
-                        gameOn = false;
-                        time2_text.setText(formatSSMM());
-                        text_recent.setText(RECENT);
-                        counterPress = 0;
-
-                        // record time
-                        int index = (time1_text.getText().toString()).indexOf(":");
-                        int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
-                        int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
-
-                        // new time
-                        index = time2_text.getText().toString().indexOf(":");
-                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
-                        int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
-
-                        // check if is new record
-                        if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
-                            time1_text.setText(time2_text.getText().toString());
-                        }
-                    }
-                }
-            }
-        });
-        /*/
+        
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
