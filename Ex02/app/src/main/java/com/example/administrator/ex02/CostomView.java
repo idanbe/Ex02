@@ -91,7 +91,7 @@ public class CostomView extends View {
 
         canvas.drawRect(left_rect + rect_x, top_rect + rect_y, right_rect + rect_x, bottom_rect + rect_y, paint);
 
-        for (i=0;i< Integer.parseInt(MainActivity.complexity);i++) {
+        /*for (i=0;i< Integer.parseInt(MainActivity.complexity);i++) {
             cx = random.nextInt(getWidth());
             while (((cx-radyus)<getLeft())||((cx+radyus)>getRight()))
             {
@@ -104,7 +104,7 @@ public class CostomView extends View {
             }
 
             canvas.drawCircle(cx, cy, radyus, paint);
-        }
+        }*/
 
     }
 
@@ -134,17 +134,17 @@ public class CostomView extends View {
                 {
                     if ((event.getY()>=(rect_y+top_rect))&&(event.getY()<=(rect_y+bottom_rect)))
                     {
-                        Log.d("@@@3", "red buton is toch");
-
+                        return true;
                     }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
+
             case MotionEvent.ACTION_CANCEL:
         }
-        return true;
+        return false;
     }
 
 

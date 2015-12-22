@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -143,37 +144,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        view.setOnClickListener(new View.OnClickListener() {
+        view.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (gameOn) {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (gameOn && view.onTouchEvent(event)) {
                     counterPress++;
-                    System.out.println("!!!!" + counterPress);
 
                     if (counterPress == Integer.parseInt(level)) {
                         gameOn = false;
                         text_recent.setText(RECENT);
+                        System.out.println("!! press = " + counterPress);
                         counterPress = 0;
+                        timerHandler.removeCallbacks(timerRunnable);
+
 
                         // record time
-                        int index = (time1_text.getText().toString()).indexOf(":");
-                        int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
-                        int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
+                        int index;
+                        try {
+                            index = (time1_text.getText().toString()).indexOf(":");
+                            int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
+                            int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
 
-                        // new time
-                        index = time2_text.getText().toString().indexOf(":");
-                        int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
-                        int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
+                            // new time
+                            index = time2_text.getText().toString().indexOf(":");
+                            int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
+                            int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
 
-                        // check if is new record
-                        if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
+                            // check if is new record
+                            if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
+                                time1_text.setText(time2_text.getText().toString());
+                            }
+                        }
+                        catch (Exception e){
                             time1_text.setText(time2_text.getText().toString());
                         }
+
+
                     }
                 }
+                return false;
             }
         });
+
         /*
         // red button
         red_button.setOnClickListener(new View.OnClickListener() {
