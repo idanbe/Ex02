@@ -107,6 +107,8 @@ public class settings extends AppCompatActivity {
         intent = new Intent(this,MainActivity.class);
         intent.putExtra(Txx, text_xx.getText().toString());
         intent.putExtra(Tyy, text_yy.getText().toString());
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

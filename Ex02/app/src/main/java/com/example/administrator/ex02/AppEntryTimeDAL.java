@@ -10,7 +10,11 @@ import java.util.ArrayList;
 /**
  * Created by ilandbt on 15/11/2015.
  */
+
+
 public class AppEntryTimeDAL {
+
+    private final String str_init = "61:00";
 
     private AppEntryTimeDBHelper helper;
 

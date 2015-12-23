@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public long startTime = 0;
     public long stopTime = 0;
     final int REFRESH = 10;
-    //private CostomView cv;
-    View view ;
+    private CostomView cv ;
+    private View view ;
 
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
         view = findViewById(R.id.view);
-  //      cv = new CostomView(this);
+
         best_presed = false;
 
 
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         // create dal
         dal = new AppEntryTimeDAL(this);
-
-        //dal.removeAll();
 
        /* dal.addTime(0, 1, "01:00");
         ArrayList arrayList = dal.getDb();
@@ -125,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
-            System.out.println("!!" + complexity);
+
+            cv = new CostomView(this);
+            cv.set_complexty(Integer.parseInt(complexity));
+
             String s = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level));
             if (s.equals("null")){
                 dal.addTime(Integer.parseInt(complexity) , Integer.parseInt(level) , str_time1);
@@ -134,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
             else {
                 time1_text.setText(s);
             }
+
+            // set compexity
+
+
+            // go to onDraw..
+            cv.invalidate();
 
             System.out.println("! level = " + level);
             System.out.println("! complexity = " + complexity);
@@ -161,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (gameOn && view.onTouchEvent(event)) {
                     counterPress++;
+                    cv.invalidate();
 
                     if (counterPress == Integer.parseInt(level)) {
                         gameOn = false;
@@ -225,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(key_xx, str_xx);
                     intent.putExtra(key_yy, str_yy);
                     best_presed = true;
+                    dal.removeRow(Integer.parseInt(complexity) , Integer.parseInt(level));
                 }
             }
         });

@@ -23,19 +23,19 @@ public class CostomView extends View {
     private float top_rect=0, right_rect=250,left_rect=0,bottom_rect=125;
     private float cx,cy,radyus=50;
     private int rand=0,rect_x=0,rect_y=0;
-    private int i,j;
+    //private int i,j;
     private Path path;
     private Random random;
-    private String complexty="4";
+    private static int complexty;
     private int[] ArrX = {60,360,690,70,360,700,80,370,710,60,360,690,70,360,700};
     private int[] ArrY = {70,70,70,240,240,240,420,420,420,590,590,590,760,760,760};
-    private int num_loc=20;
-    private boolean[] location;
+    private int num_loc=15;
+    private boolean[] location  ;
 
     public CostomView(Context context) {
         super(context);
         init(null, 0);
-
+        reset_locstion();
     }
 
     public CostomView(Context context, AttributeSet attrs) {
@@ -48,6 +48,7 @@ public class CostomView extends View {
         init(attrs, defStyle);
     }
 
+
     private void init(AttributeSet attrs, int defStyle) {
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -55,7 +56,8 @@ public class CostomView extends View {
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         path = new Path();
-        location =new boolean[20];
+        location =new boolean[num_loc];
+        reset_locstion();
         random = new Random();
         Log.d("debug","init");
     }
@@ -75,9 +77,10 @@ public class CostomView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        rand = random.nextInt(3);
 
-        Log.d("debug5", "rand:"+rand);
+        rand = random.nextInt(num_loc-1);
+
+        Log.d("debug5", "rand:" + rand);
 
         Log.d("debug5", "onDraw");
             location[rand]=true;
@@ -86,22 +89,27 @@ public class CostomView extends View {
          canvas.drawRect(left_rect + rect_x, top_rect + rect_y, right_rect + rect_x, bottom_rect + rect_y, paint);
 
 
+        int i ;
 
-
-        for(i=0;i<Integer.parseInt(complexty);i++)
+        Log.d("ddebug", "co =" + complexty);
+        for(i=0 ; i <complexty; i++)
         {
-           Log.d("debug","in for cirle loop " +i);
-            int r = random.nextInt(20) ;
+            Log.d("debug", "in for !! " + i);
 
-            //while (location[rand]) //loction not clear to draw
-             // {
-              //    rand = random.nextInt(20);
-            //  }
-            Log.d("debug","in for cirle loop rand" +r);
+            rand = random.nextInt(num_loc-1) ;
+
+
+            while (location[rand]) //loction not clear to draw
+            {
+                  rand = random.nextInt(num_loc-1);
+                Log.d("debug", "in for !! " + i);
+            }
+            location[rand] = true;
+            Log.d("debug","in for cirle loop rand" );
 
             //canvas.drawCircle(ArrX[r],ArrY[r], radyus, paint);
-            canvas.drawCircle(ArrX[i],ArrY[i], radyus, paint);
-
+            Log.d("ddebug", "x = " + ArrX[rand] + ", y = " + ArrY[rand] + ", Radyus = " + radyus);
+            canvas.drawCircle(ArrX[rand], ArrY[rand], radyus, paint);
         }
          //   /*
 
@@ -123,7 +131,8 @@ public class CostomView extends View {
 
     private void reset_locstion()
     {
-        for (i=0;i<num_loc;i++)
+        int i ;
+        for (i=0 ; i <num_loc; i++)
         {
             location[i]=false;
         }
@@ -157,9 +166,9 @@ public class CostomView extends View {
 
 
 
-    public void set_complexty(String c)
+    public void set_complexty(int c)
     {
-        complexty=c;
+        this.complexty = c;
         Log.d("debug1","comlexty:"+c);
     }
 
