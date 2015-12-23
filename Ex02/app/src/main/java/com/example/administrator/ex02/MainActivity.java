@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     static final String str_yy = "YY";
     static final String RECENT = "Recent result";
     static final String CURRENT = "Current time";
-    static final String str_time1 = "00:00";
+    static final String str_time1 = "61:00"; // not ok
+    static final String str_init = "00:00"; // not ok
     static String level = "1";
     static String complexity = "0";
     private final String TAG = getClass().getSimpleName();
@@ -125,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
 
+            String s = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level));
+            if (s.equals("null")){
+                dal.addTime(Integer.parseInt(complexity) , Integer.parseInt(level) , str_time1);
+                time1_text.setText(str_init);
+            }
+            else {
+                time1_text.setText(s);
+            }
 
             System.out.println("! level = " + level);
             System.out.println("! complexity = " + complexity);
@@ -176,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
                             // check if is new record
                             if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
                                 time1_text.setText(time2_text.getText().toString());
+                                dal.addTime(Integer.parseInt(complexity), Integer.parseInt(level), time1_text.getText().toString() );
                             }
                         }
                         catch (Exception e){
