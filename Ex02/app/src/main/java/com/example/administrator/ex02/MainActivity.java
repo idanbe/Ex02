@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
         view = findViewById(R.id.view);
-        cv = new CostomView(this);
+  //      cv = new CostomView(this);
         best_presed = false;
 
 
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("! level = " + level);
             System.out.println("! complexity = " + complexity);
         }
-        cv.set_complexty(complexity);
+    //    cv.set_complexty(complexity);
 
 
         // start button
