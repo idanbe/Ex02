@@ -136,16 +136,12 @@ public class MainActivity extends AppCompatActivity {
                 time1_text.setText(s);
             }
 
-            // set compexity
-
-
             // go to onDraw..
             cv.invalidate();
 
             System.out.println("! level = " + level);
             System.out.println("! complexity = " + complexity);
         }
-    //    cv.set_complexty(complexity);
 
 
         // start button

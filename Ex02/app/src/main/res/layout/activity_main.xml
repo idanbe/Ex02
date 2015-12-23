@@ -75,7 +75,6 @@
     <com.example.administrator.ex02.CostomView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#123456"
         android:id="@+id/view"
         android:layout_below="@+id/button_start"
         />
