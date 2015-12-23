@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public long startTime = 0;
     public long stopTime = 0;
     final int REFRESH = 10;
-    private CostomView cv;
+    //private CostomView cv;
     View view ;
 
     Handler timerHandler = new Handler();
@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
         // create dal
         dal = new AppEntryTimeDAL(this);
 
-        dal.removeAll();
+        //dal.removeAll();
 
-        dal.addTime(0, 1, "01:00");
+       /* dal.addTime(0, 1, "01:00");
         ArrayList arrayList = dal.getDb();
         System.out.println("!" + arrayList.toString());
 
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         dal.addTime(13, 1, "30:00");
         arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
+        System.out.println("!" + arrayList.toString());*/
 
 
         bundle = getIntent().getExtras();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
-
+            System.out.println("!!" + complexity);
             String s = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level));
             if (s.equals("null")){
                 dal.addTime(Integer.parseInt(complexity) , Integer.parseInt(level) , str_time1);
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("!! press = " + counterPress);
                         counterPress = 0;
                         timerHandler.removeCallbacks(timerRunnable);
-
 
                         // record time
                         int index;
@@ -254,7 +253,14 @@ public class MainActivity extends AppCompatActivity {
         // check if there is a data
         if (sharedPreferences != null) {
             // restore data
-            time1_text.setText(sharedPreferences.getString(text_time1_key, ""));
+            String record = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level)) ;
+            if(record.equals("null")) {
+                time1_text.setText(str_init);
+            }
+            else {
+                time1_text.setText(record);
+            }
+            //time1_text.setText(sharedPreferences.getString(text_time1_key, ""));
             time2_text.setText(sharedPreferences.getString(text_time2_key, ""));
         }
     }

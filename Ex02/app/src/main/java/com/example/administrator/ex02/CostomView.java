@@ -75,7 +75,7 @@ public class CostomView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        rand = random.nextInt(20);
+        rand = random.nextInt(3);
 
         Log.d("debug5", "rand:"+rand);
 
