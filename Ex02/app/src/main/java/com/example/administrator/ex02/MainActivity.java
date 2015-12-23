@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public long startTime = 0;
     public long stopTime = 0;
     final int REFRESH = 10;
-
+    private CostomView cv;
     View view ;
 
     Handler timerHandler = new Handler();
@@ -68,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button start_button, setting_button, red_button;
+        Button start_button, setting_button;
 
         start_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
-        red_button = (Button) findViewById(R.id.button_red);
         time1_text = (TextView) findViewById(R.id.text_time1);
         time2_text = (TextView) findViewById(R.id.text_time2);
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
         view = findViewById(R.id.view);
+        cv = new CostomView(this);
         best_presed = false;
 
 
@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("! level = " + level);
             System.out.println("! complexity = " + complexity);
         }
+        cv.set_complexty(complexity);
+
 
         // start button
         start_button.setOnClickListener(new View.OnClickListener() {
