@@ -1,18 +1,14 @@
 package com.example.administrator.ex02;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
 import java.util.Random;
 
 
@@ -28,7 +24,8 @@ public class CostomView extends View {
     private static final int ten=10;
     private Path path;
     private Random random;
-    private static int complexty;
+    private static int complexity;
+    private static boolean gameOn = false ;
     private int[] ArrX = {60,360,690,70,360,700,80,370,710,60,360,690,70,360,700};
     private int[] ArrY = {70,70,70,240,240,240,420,420,420,590,590,590,760,760,760};
     private int num_loc=15;
@@ -61,7 +58,6 @@ public class CostomView extends View {
         location =new boolean[num_loc];
         reset_location();
         random = new Random();
-        Log.d("debug","init");
     }
 
     @Override
@@ -78,6 +74,7 @@ public class CostomView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        System.out.println("!! onDraw !!");
 
         //draw rect
         rand = random.nextInt(num_loc);
@@ -87,7 +84,8 @@ public class CostomView extends View {
         canvas.drawRect(left_rect + rect_x, top_rect + rect_y, right_rect + rect_x, bottom_rect + rect_y, paint);
 
         //draw circle
-        for(i=zero ; i <complexty; i++)
+        System.out.println("!! complexity = " + complexity);
+        for(i=zero ; i <complexity; i++)
         {
             rand = random.nextInt(num_loc) ;
             while (location[rand]) //loction not clear to draw
@@ -99,7 +97,7 @@ public class CostomView extends View {
         }
     }
 
-
+    // reset boolean array
     private void reset_location()
     {
         for (i=zero ; i <num_loc; i++)
@@ -120,7 +118,8 @@ public class CostomView extends View {
                 {
                     if ((event.getY()>=(rect_y+top_rect))&&(event.getY()<=(rect_y+bottom_rect)))
                     {
-                        //invalidate();
+                            //invalidate();
+
                         return true;
                     }
                 }
@@ -136,9 +135,13 @@ public class CostomView extends View {
 
 
 
-    public void set_complexty(int c)
-    {
-        this.complexty = c;
+    public void set_complexity(int c) {
+        this.complexity = c;
+
+    }
+
+    public  void setGameOn(boolean gameOn) {
+        this.gameOn = gameOn ;
     }
 
 

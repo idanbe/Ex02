@@ -23,7 +23,11 @@ public class settings extends AppCompatActivity {
     static final String Ryy ="key4";
     static final String Txx ="key5";
     static final String Tyy ="key6";
-    static final String TAG ="debug";
+    static final String MIN_LEVEL = "1" ;
+    static final String MAX_LEVEL = "10" ;
+    static final String MAX_COMPLEXITY = "4" ;
+    static final String MIN_COMPLEXITY = "0" ;
+    static final String RESTART_SETTING = "" ;
     private   Bundle bundle;
     private String bundle_value;
     private Intent intent;
@@ -50,14 +54,12 @@ public class settings extends AppCompatActivity {
             text_xx.setHint(bundle_value);
             bundle_value = bundle.getString(Ryy);
             text_yy.setHint(bundle_value);
-            //getIntent().removeExtra(Rxx);
-            //getIntent().removeExtra(Ryy);
         }
 
 
         //limit input
-        text_xx.setFilters(new InputFilter[]{new InputFilterMinMax("1", "10")});
-        text_yy.setFilters(new InputFilter[]{new InputFilterMinMax("0", "4")});
+        text_xx.setFilters(new InputFilter[]{new InputFilterMinMax(MIN_LEVEL, MAX_LEVEL)});
+        text_yy.setFilters(new InputFilter[]{new InputFilterMinMax(MIN_COMPLEXITY, MAX_COMPLEXITY)});
 
 
     }
@@ -85,8 +87,8 @@ public class settings extends AppCompatActivity {
             // restore data
             if(bundle==null)
             {
-                text_xx.setText(sharedPreferences.getString(text_xx_key, ""));
-                text_yy.setText(sharedPreferences.getString(text_yy_key ,""));
+                text_xx.setText(sharedPreferences.getString(text_xx_key, RESTART_SETTING));
+                text_yy.setText(sharedPreferences.getString(text_yy_key ,RESTART_SETTING));
             }
 
         }
@@ -96,8 +98,6 @@ public class settings extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         saveData(sharedPreferences);
-
-        Log.d(TAG, "@@@@@onStop ");
     }
 
 
@@ -117,12 +117,6 @@ public class settings extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
     }
-
-
-
-
-
-
 
 
 

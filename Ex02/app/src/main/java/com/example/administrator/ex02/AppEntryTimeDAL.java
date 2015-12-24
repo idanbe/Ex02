@@ -11,12 +11,11 @@ import java.util.ArrayList;
  * Created by ilandbt on 15/11/2015.
  */
 
-
 public class AppEntryTimeDAL {
 
-    private final String str_init = "61:00";
 
     private AppEntryTimeDBHelper helper;
+    private final String str_init = "00:00";
 
 
     public AppEntryTimeDAL(Context context){
@@ -30,13 +29,11 @@ public class AppEntryTimeDAL {
 
         // if the element is exist then need upData
         if (thereIsRow(complexity, level)){
-            upDateEntryTime(complexity , level , time);
-            System.out.println("Edit !!");
+            upDateEntryTime(complexity, level, time);
         }
 
         // if element not exist then add element
         else {
-            System.out.println("Add !!");
             //values to save
             ContentValues values = new ContentValues();
 
@@ -111,7 +108,7 @@ public class AppEntryTimeDAL {
     // get record according to complexity and level
     public String getRecord(int complexity , int level){
 
-        String timeString = "null";
+        String timeString = str_init;
 
         Cursor c = getRow(complexity, level); //get cursor on start row
 
@@ -125,7 +122,6 @@ public class AppEntryTimeDAL {
                     timeString = c.getString(entryTimeColumnIndex);
                 }
                 catch (Exception e){
-                    System.out.println("Catch Exception on getRecord() !!");
                 }
             }
         }
@@ -165,7 +161,6 @@ public class AppEntryTimeDAL {
                 }
                 //save in array
                 catch (Exception e){
-                    System.out.println("Catch Exception1 !!");
                 }
 
                 entryTimeColumnIndex = c.getColumnIndex(AppEntryTimeContract.AppEntryTime.LEVEL);
@@ -177,7 +172,6 @@ public class AppEntryTimeDAL {
                 }
                 //save in array
                 catch (Exception e){
-                    System.out.println("Catch Exception2 !!");
                 }
 
                 entryTimeColumnIndex = c.getColumnIndex(AppEntryTimeContract.AppEntryTime.TIME);
@@ -189,7 +183,7 @@ public class AppEntryTimeDAL {
                 }
                 //save in array
                 catch (Exception e){
-                    System.out.println("Catch Exception3 !!");
+
                 }
 
             }

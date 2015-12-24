@@ -3,22 +3,19 @@ package com.example.administrator.ex02;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    //views
 
     private TextView text_recent, text_best, time1_text, time2_text;
     SharedPreferences sharedPreferences;
@@ -32,15 +29,18 @@ public class MainActivity extends AppCompatActivity {
     static final String str_yy = "YY";
     static final String RECENT = "Recent result";
     static final String CURRENT = "Current time";
-    static final String str_time1 = "61:00"; // not ok
-    static final String str_init = "00:00"; // not ok
-    static String level = "1";
-    static String complexity = "0";
-    private final String TAG = getClass().getSimpleName();
+    static final String str_init = "00:00";
+    static final String RESTART_SETTING = "" ;
+    static final String SEARCH_SETTING = ":" ;
+    static final String RESTART_LEVEL = "1" ;
+    static final String RESTART_COMPLEXITY = "0" ;
+    static String level = RESTART_LEVEL;
+    static String complexity = RESTART_COMPLEXITY;
     private int counterPress = 0;
+    private final int ZERO = 0;
     private Intent intent;
     private Bundle bundle;
-    private boolean best_presed = false;
+    private boolean best_pressed = false;
     private Boolean gameOn = false;
     private AppEntryTimeDAL dal;
     public long startTime = 0;
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     final int REFRESH = 10;
     private CostomView cv ;
     private View view ;
+    private final String str_format=  "%02d:%02d";
+
 
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
@@ -55,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             stopTime = System.currentTimeMillis() ;
             long timeInMilli = stopTime - startTime;
-            int seconds = ((int)(timeInMilli/1000))%60;
+            int seconds = ((int)(timeInMilli/1000));
 
-            time2_text.setText(String.format("%02d:%02d", seconds, timeInMilli % 100));
+            time2_text.setText(String.format(str_format, seconds, timeInMilli % 100));
             timerHandler.postDelayed( this , REFRESH);
         }
     };
@@ -79,69 +81,48 @@ public class MainActivity extends AppCompatActivity {
         text_best = (TextView) findViewById(R.id.textView_best);
         view = findViewById(R.id.view);
 
-        best_presed = false;
+        best_pressed = false;
 
 
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
-
         // create dal
         dal = new AppEntryTimeDAL(this);
+        //dal.removeAll();
 
-       /* dal.addTime(0, 1, "01:00");
-        ArrayList arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
+        // custom view
+        cv = new CostomView(this);
 
-        dal.addTime(0, 1, "02:00");
-        arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
 
-        dal.addTime(0, 2, "10:00");
-        arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
-
-        dal.addTime(0, 2, "11:00");
-        arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
-
-        dal.addTime(1, 2, "20:00");
-        arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());
-
-        dal.addTime(13, 1, "30:00");
-        arrayList = dal.getDb();
-        System.out.println("!" + arrayList.toString());*/
 
 
         bundle = getIntent().getExtras();
 
-        Log.d(TAG, "@@@mainActivity");
-
         // get complexity and level
         if (bundle != null) {
 
+            System.out.println("in bundle !!");
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
 
-            cv = new CostomView(this);
-            cv.set_complexty(Integer.parseInt(complexity));
+            if(complexity.equals(RESTART_SETTING) ){
+                complexity = RESTART_COMPLEXITY;
+            }
+            if(level.equals(RESTART_SETTING)){
+                level = RESTART_LEVEL;
+            }
+
+            cv.set_complexity(Integer.parseInt(complexity));
 
             String s = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level));
-            if (s.equals("null")){
-                dal.addTime(Integer.parseInt(complexity) , Integer.parseInt(level) , str_time1);
-                time1_text.setText(str_init);
-            }
-            else {
-                time1_text.setText(s);
-            }
+            time1_text.setText(s);
 
             // go to onDraw..
             cv.invalidate();
 
-            System.out.println("! level = " + level);
-            System.out.println("! complexity = " + complexity);
         }
+
 
 
         // start button
@@ -149,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!gameOn) {
-                    System.out.println("! in start");
                     startTime = System.currentTimeMillis();
-                    timerHandler.postDelayed(timerRunnable, 0);
+                    timerHandler.postDelayed(timerRunnable, ZERO);
                     gameOn = true;
+                    cv.setGameOn(true);
                     text_recent.setText(CURRENT);
                 }
             }
@@ -164,29 +145,34 @@ public class MainActivity extends AppCompatActivity {
 
                 if (gameOn && view.onTouchEvent(event)) {
                     counterPress++;
-                    cv.invalidate();
+
+                    /* ??????????????*/
+                    //cv.invalidate();
+                    /*??????????????*/
+
+                    System.out.println("!!counterPress =" + counterPress);
 
                     if (counterPress == Integer.parseInt(level)) {
                         gameOn = false;
+                        cv.setGameOn(false);
                         text_recent.setText(RECENT);
-                        System.out.println("!! press = " + counterPress);
-                        counterPress = 0;
+                        counterPress = ZERO;
                         timerHandler.removeCallbacks(timerRunnable);
 
                         // record time
                         int index;
                         try {
-                            index = (time1_text.getText().toString()).indexOf(":");
-                            int s1 = Integer.parseInt((time1_text.getText().toString()).substring(0, index));
+                            index = (time1_text.getText().toString()).indexOf(SEARCH_SETTING);
+                            int s1 = Integer.parseInt((time1_text.getText().toString()).substring(ZERO, index));
                             int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
 
                             // new time
-                            index = time2_text.getText().toString().indexOf(":");
-                            int s2 = Integer.parseInt((time2_text.getText().toString()).substring(0, index));
+                            index = time2_text.getText().toString().indexOf(SEARCH_SETTING);
+                            int s2 = Integer.parseInt((time2_text.getText().toString()).substring(ZERO, index));
                             int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
 
                             // check if is new record
-                            if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == 0 && m1 == 0)) {
+                            if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == ZERO && m1 == ZERO)) {
                                 time1_text.setText(time2_text.getText().toString());
                                 dal.addTime(Integer.parseInt(complexity), Integer.parseInt(level), time1_text.getText().toString() );
                             }
@@ -208,8 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //go to settings activity
                 if (!gameOn) {
-                    System.out.println("! in setting");
-                    if (!best_presed) {
+                    if (!best_pressed) {
                         intent = new Intent(v.getContext(), settings.class);
                     }
                     startActivity(intent);
@@ -219,16 +204,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // rest record
         text_best.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!gameOn) {
-                    time1_text.setText(str_time1);
+                    time1_text.setText(str_init);
                     intent = new Intent(v.getContext(), settings.class);
                     intent.putExtra(key_xx, str_xx);
                     intent.putExtra(key_yy, str_yy);
-                    best_presed = true;
+                    best_pressed = true;
                     dal.removeRow(Integer.parseInt(complexity) , Integer.parseInt(level));
                 }
             }
@@ -257,16 +242,13 @@ public class MainActivity extends AppCompatActivity {
 
         // check if there is a data
         if (sharedPreferences != null) {
-            // restore data
+
+            // restore record from DB
             String record = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level)) ;
-            if(record.equals("null")) {
-                time1_text.setText(str_init);
-            }
-            else {
-                time1_text.setText(record);
-            }
-            //time1_text.setText(sharedPreferences.getString(text_time1_key, ""));
-            time2_text.setText(sharedPreferences.getString(text_time2_key, ""));
+            time1_text.setText(record);
+
+            // restore data from sharedPreferences
+            time2_text.setText(sharedPreferences.getString(text_time2_key, RESTART_SETTING));
         }
     }
 
