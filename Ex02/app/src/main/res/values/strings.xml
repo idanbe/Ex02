@@ -3,8 +3,8 @@
     <string name="button_start">start</string>
     <string name="button_sttings">sttings</string>
     <string name="textView_best">best result</string>
-    <string name="text_time1">ss:mmm</string>
-    <string name="text_time2">ss:mmm</string>
+    <string name="text_time1">ss:mm</string>
+    <string name="text_time2">ss:mm</string>
     <string name="text_level">Level</string>
     <string name="text_complx">Complexity</string>
     <string name="text_xx">XX</string>
