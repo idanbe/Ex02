@@ -49,17 +49,20 @@ public class MainActivity extends AppCompatActivity {
     private CostomView cv ;
     private View view ;
     private final String str_format=  "%02d:%02d";
+    private final int MILLI_IN_SECOND = 1000;
+    private final int MODULO_MILLI = 100;
 
 
+    // time run
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
             stopTime = System.currentTimeMillis() ;
             long timeInMilli = stopTime - startTime;
-            int seconds = ((int)(timeInMilli/1000));
-
-            time2_text.setText(String.format(str_format, seconds, timeInMilli % 100));
+            int seconds = ((int)(timeInMilli/MILLI_IN_SECOND));
+            // time in thread
+            time2_text.setText(String.format(str_format, seconds, timeInMilli % MODULO_MILLI));
             timerHandler.postDelayed( this , REFRESH);
         }
     };
@@ -71,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //  set values
         Button start_button, setting_button;
-
         start_button = (Button) findViewById(R.id.button_start);
         setting_button = (Button) findViewById(R.id.button_sttings);
         time1_text = (TextView) findViewById(R.id.text_time1);
@@ -80,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         text_recent = (TextView) findViewById(R.id.textView_resnt);
         text_best = (TextView) findViewById(R.id.textView_best);
         view = findViewById(R.id.view);
-
         best_pressed = false;
 
 
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        // get level and comlexity from setting class
         bundle = getIntent().getExtras();
 
         // get complexity and level
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
 
+            // if user not enter parameters to level or complexity
             if(complexity.equals(RESTART_SETTING) ){
                 complexity = RESTART_COMPLEXITY;
             }
@@ -113,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
                 level = RESTART_LEVEL;
             }
 
+            // set complexity number for draw circle
             cv.set_complexity(Integer.parseInt(complexity));
 
+            // get record from DB and set in "best result "
             String s = dal.getRecord(Integer.parseInt(complexity), Integer.parseInt(level));
             time1_text.setText(s);
 
@@ -139,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // whem user press on view
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+                // only if game is on
                 if (gameOn && view.onTouchEvent(event)) {
                     counterPress++;
 
@@ -151,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     /*??????????????*/
 
                     System.out.println("!!counterPress =" + counterPress);
-
+                    // if game is finish
                     if (counterPress == Integer.parseInt(level)) {
                         gameOn = false;
                         cv.setGameOn(false);
@@ -162,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         // record time
                         int index;
                         try {
+                            // the old record
                             index = (time1_text.getText().toString()).indexOf(SEARCH_SETTING);
                             int s1 = Integer.parseInt((time1_text.getText().toString()).substring(ZERO, index));
                             int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
@@ -174,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                             // check if is new record
                             if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == ZERO && m1 == ZERO)) {
                                 time1_text.setText(time2_text.getText().toString());
+                                // save in DB
                                 dal.addTime(Integer.parseInt(complexity), Integer.parseInt(level), time1_text.getText().toString() );
                             }
                         }
@@ -188,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        
+        // setting
         setting_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,9 +220,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!gameOn) {
                     time1_text.setText(str_init);
                     intent = new Intent(v.getContext(), settings.class);
+                    // reset level and complexity
                     intent.putExtra(key_xx, str_xx);
                     intent.putExtra(key_yy, str_yy);
                     best_pressed = true;
+                    // remove from DB
                     dal.removeRow(Integer.parseInt(complexity) , Integer.parseInt(level));
                 }
             }
@@ -255,14 +266,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-
+        // save data
         saveData(sharedPreferences);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        // restart game after press Home Button
+        gameOn = false;
+        cv.setGameOn(false);
+        text_recent.setText(RECENT);
+        counterPress = ZERO;
+        timerHandler.removeCallbacks(timerRunnable);
 
     }
 
