@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class AppEntryTimeDAL {
 
-
+    // values
     private AppEntryTimeDBHelper helper;
     private final String str_init = "00:00";
 
@@ -134,7 +134,7 @@ public class AppEntryTimeDAL {
    // TODO : remove this function  , only for test
     public Cursor getAllDBCursor(){
         SQLiteDatabase db = helper.getWritableDatabase();
-
+        // get all DB
         Cursor c = db.rawQuery("SELECT * FROM " + AppEntryTimeContract.AppEntryTime.TABLE_NAME, null);
 
         return c;

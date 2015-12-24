@@ -91,14 +91,14 @@ public class MainActivity extends AppCompatActivity {
 
         // create dal
         dal = new AppEntryTimeDAL(this);
-        //dal.removeAll();
+        //dal.removeAll(); // if you want to remove all DB , after remove mark this line again
 
         // custom view
         cv = new CostomView(this);
 
 
 
-        // get level and comlexity from setting class
+        // get level and complexity from setting class
         bundle = getIntent().getExtras();
 
         // get complexity and level

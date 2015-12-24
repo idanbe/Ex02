@@ -14,12 +14,12 @@ import java.util.Random;
 
 public class CostomView extends View {
 
+    // values
     private Paint paint;
-    private float top, left, width, height;
     private float top_rect=0, right_rect=250,left_rect=0,bottom_rect=105;
-    private float cx=30,cy=20,radyus=50;
-    private int rand=0,rect_x=0,rect_y=0;
-    private int i;
+    private float cx=30,cy=20,radyus=50;    // for circle
+    private int rand=0,rect_x=0,rect_y=0;   // for rectangle
+    private int i;                          // index
     private static final int zero=0;
     private static final int ten=10;
     private Path path;
@@ -31,24 +31,28 @@ public class CostomView extends View {
     private int num_loc=15;
     private boolean[] location;
 
+    // constructor A
     public CostomView(Context context) {
         super(context);
         init(null, zero);
         reset_location();
     }
 
+    // constructor B
     public CostomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, zero);
     }
 
+    // constructor C
     public CostomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
 
-
+    // init
     private void init(AttributeSet attrs, int defStyle) {
+        // set circle configuration
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.RED);
@@ -63,12 +67,6 @@ public class CostomView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        left = getPaddingRight();
-        top = getPaddingTop();
-        width = w - (getPaddingLeft() + getPaddingRight());
-        height = h - (getPaddingTop() + getPaddingBottom());
-
     }
 
     @Override
@@ -109,7 +107,7 @@ public class CostomView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+        // touch on view
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
 
@@ -127,24 +125,25 @@ public class CostomView extends View {
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
-
+                break;
             case MotionEvent.ACTION_CANCEL:
+                break;
+
         }
         return false;
     }
 
 
-
+    // set complexity to draw circle
     public void set_complexity(int c) {
         this.complexity = c;
 
     }
 
+    // check if game is started
     public  void setGameOn(boolean gameOn) {
         this.gameOn = gameOn ;
     }
-
-
 
 
 }

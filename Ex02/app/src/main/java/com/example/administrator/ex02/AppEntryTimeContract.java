@@ -11,7 +11,8 @@ public class AppEntryTimeContract {
 
     public static abstract class AppEntryTime implements  BaseColumns {
 
-        public static final String TABLE_NAME = "SaveTime";
+
+        public static final String TABLE_NAME = "SaveTime"; // table name
         // ID column automatically
         public static final String COMPLEXITY = "complexity";
         public static final String LEVEL = "level";

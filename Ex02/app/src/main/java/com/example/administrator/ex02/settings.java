@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class settings extends AppCompatActivity {
 
-    //views
+    // values views
     private EditText text_xx ,text_yy;
     SharedPreferences sharedPreferences;
     static final String text_xx_key ="key1";
