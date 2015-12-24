@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     counterPress++;
 
                     /* ??????????????*/
-                    //cv.invalidate();
+                    v.invalidate();
                     /*??????????????*/
 
                     System.out.println("!!counterPress =" + counterPress);
