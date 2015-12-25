@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     static String complexity = RESTART_COMPLEXITY;
     private int counterPress = 0;
     private final int ZERO = 0;
+    private final int ONE = 1;
     private Intent intent;
     private Bundle bundle;
     private boolean best_pressed = false;
@@ -87,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
         best_pressed = false;
 
 
-
-
-
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
@@ -101,14 +99,12 @@ public class MainActivity extends AppCompatActivity {
         cv = new CostomView(this);
 
 
-
         // get level and complexity from setting class
         bundle = getIntent().getExtras();
 
         // get complexity and level
         if (bundle != null) {
 
-            System.out.println("in bundle !!");
             level = bundle.getString(Rxx);
             complexity = bundle.getString(Ryy);
 
@@ -121,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // set complexity number for draw circle
-
             cv.set_complexity(Integer.parseInt(complexity));
 
             // get record from DB and set in "best result "
@@ -130,10 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             // go to onDraw..
             cv.invalidate();
-
         }
-
-
 
         // start button
         start_button.setOnClickListener(new View.OnClickListener() {
@@ -158,11 +150,8 @@ public class MainActivity extends AppCompatActivity {
                 if (gameOn && view.onTouchEvent(event)) {
                     counterPress++;
 
-                    /* ??????????????*/
-                    v.invalidate();
-                    /*??????????????*/
+                    v.invalidate(); //after press draw again in random location
 
-                    System.out.println("!!counterPress =" + counterPress);
                     // if game is finish
                     if (counterPress == Integer.parseInt(level)) {
                         gameOn = false;
@@ -177,12 +166,12 @@ public class MainActivity extends AppCompatActivity {
                             // the old record
                             index = (time1_text.getText().toString()).indexOf(SEARCH_SETTING);
                             int s1 = Integer.parseInt((time1_text.getText().toString()).substring(ZERO, index));
-                            int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + 1, time1_text.getText().length()));
+                            int m1 = Integer.parseInt((time1_text.getText().toString()).substring(index + ONE, time1_text.getText().length()));
 
                             // new time
                             index = time2_text.getText().toString().indexOf(SEARCH_SETTING);
                             int s2 = Integer.parseInt((time2_text.getText().toString()).substring(ZERO, index));
-                            int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + 1, time2_text.getText().length()));
+                            int m2 = Integer.parseInt((time2_text.getText().toString()).substring(index + ONE, time2_text.getText().length()));
 
                             // check if is new record
                             if (s2 < s1 || (s2 == s1 && m2 < m1) || (s1 == ZERO && m1 == ZERO)) {
@@ -213,8 +202,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     startActivity(intent);
                 }
-
-
             }
         });
 
