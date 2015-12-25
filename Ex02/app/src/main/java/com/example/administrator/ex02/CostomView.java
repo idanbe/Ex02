@@ -26,10 +26,10 @@ public class CostomView extends View {
     private Random random;
     private static int complexity;
     private static boolean gameOn = false ;
-    private int[] ArrX = {60,360,690,70,360,700,80,370,710,60,360,690,70,360,700};
+    private int[] ArrX = {60,360,690,70,360,700,80,370,710,60,360,690,70,360,700};  // location we can draw
     private int[] ArrY = {70,70,70,240,240,240,420,420,420,590,590,590,760,760,760};
     private int num_loc=15;
-    private boolean[] location;
+    private boolean[] location; //this array indicate if location is clear to draw
 
 
 
@@ -76,7 +76,6 @@ public class CostomView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        System.out.println("!! onDraw !!");
         reset_location(); //set all loctaion to free
         //draw rect
         rand = random.nextInt(num_loc);
@@ -115,13 +114,11 @@ public class CostomView extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
 
-
                 if((event.getX()>=(rect_x+left_rect))&&((event.getX()<=(rect_x+right_rect))))
                 {
                     if ((event.getY()>=(rect_y+top_rect))&&(event.getY()<=(rect_y+bottom_rect)))
                     {
-                            //invalidate();
-
+                            //press on red rectangle
                         return true;
                     }
                 }
@@ -141,7 +138,6 @@ public class CostomView extends View {
     // set complexity to draw circle
     public void set_complexity(int c) {
         this.complexity = c;
-
     }
 
     // check if game is started
