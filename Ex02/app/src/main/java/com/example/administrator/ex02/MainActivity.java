@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         best_pressed = false;
 
 
+
+
+
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // set complexity number for draw circle
+
             cv.set_complexity(Integer.parseInt(complexity));
 
             // get record from DB and set in "best result "

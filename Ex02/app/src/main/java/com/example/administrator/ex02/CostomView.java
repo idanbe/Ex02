@@ -31,6 +31,9 @@ public class CostomView extends View {
     private int num_loc=15;
     private boolean[] location;
 
+
+
+
     // constructor A
     public CostomView(Context context) {
         super(context);
@@ -62,6 +65,7 @@ public class CostomView extends View {
         location =new boolean[num_loc];
         reset_location();
         random = new Random();
+
     }
 
     @Override
@@ -73,7 +77,7 @@ public class CostomView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         System.out.println("!! onDraw !!");
-
+        reset_location();
         //draw rect
         rand = random.nextInt(num_loc);
         location[rand]=true;
