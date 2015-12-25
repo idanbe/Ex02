@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     static final String Ryy = "key6";
     static final String str_xx = "XX";
     static final String str_yy = "YY";
-    static final String RECENT = "Recent result";
-    static final String CURRENT = "Current time";
+    static final String RECENT = "Recent Result";
+    static final String CURRENT = "Current Time";
     static final String str_init = "00:00";
     static final String RESTART_SETTING = "" ;
     static final String SEARCH_SETTING = ":" ;
@@ -291,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -304,7 +306,15 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+            if (!gameOn) {
+                if (!best_pressed) {
+                    intent = new Intent(MainActivity.this, settings.class);
+                }
+                startActivity(intent);
+            }
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -77,7 +77,7 @@ public class CostomView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         System.out.println("!! onDraw !!");
-        reset_location();
+        reset_location(); //set all loctaion to free
         //draw rect
         rand = random.nextInt(num_loc);
         location[rand]=true;

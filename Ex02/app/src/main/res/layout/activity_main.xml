@@ -15,8 +15,8 @@
         android:id="@+id/button_start"
         android:text="@string/button_start"
         android:layout_alignTop="@+id/button_sttings"
-        android:layout_alignRight="@+id/textView_best"
-        android:layout_alignEnd="@+id/textView_best" />
+        android:layout_alignLeft="@+id/textView_resnt"
+        android:layout_alignStart="@+id/textView_resnt" />
 
     <Button
         android:layout_width="wrap_content"
@@ -41,7 +41,11 @@
         android:layout_marginTop="33dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/textView_resnt"
-        android:layout_alignStart="@+id/textView_resnt" />
+        android:layout_alignStart="@+id/textView_resnt"
+        android:layout_alignRight="@+id/textView_resnt"
+        android:layout_alignEnd="@+id/textView_resnt"
+        android:textStyle="bold"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +63,9 @@
         android:hint="@string/textView_resnt"
         android:id="@+id/textView_resnt"
         android:layout_alignTop="@+id/text_time2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
