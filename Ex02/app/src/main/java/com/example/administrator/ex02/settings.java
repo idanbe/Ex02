@@ -48,6 +48,7 @@ public class settings extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
 
+        // to ged complexity and level
         if(bundle!=null)
         {
             bundle_value = bundle.getString(Rxx);

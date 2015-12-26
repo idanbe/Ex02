@@ -3,11 +3,9 @@ package com.example.administrator.ex02;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private final int MODULO_MILLI = 100;
 
 
-    // time run
+    // time run for text time 2
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
@@ -93,7 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
         // create dal
         dal = new AppEntryTimeDAL(this);
-        //dal.removeAll(); // if you want to remove all DB , after remove mark this line again
+
+        /*// if you want to remove all DB , after remove mark this line again
+        //dal.removeAll();
+        you need to mark the function in AooEntryDal class too */
 
         // custom view
         cv = new CostomView(this);
@@ -282,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
 
     @Override

@@ -37,6 +37,7 @@ public class AppEntryTimeDAL {
             //values to save
             ContentValues values = new ContentValues();
 
+            // add to table
             values.put(AppEntryTimeContract.AppEntryTime.COMPLEXITY, complexity);
             values.put(AppEntryTimeContract.AppEntryTime.LEVEL, level);
             values.put(AppEntryTimeContract.AppEntryTime.TIME, time);
@@ -65,22 +66,23 @@ public class AppEntryTimeDAL {
     }
 
 
-    // TODO : remove this function  , only for test
+    /*// TODO : remove this function  , only for test
     // remove all rows
     public  void removeAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(AppEntryTimeContract.AppEntryTime.TABLE_NAME, null, null);
-    }
+    }*/
 
 
-    // TODO : remove this function  , only for test
     // remove one row
     public  void removeRow(int complexity , int level){
         SQLiteDatabase db = helper.getWritableDatabase();
 
+        // search the correct row
         String selection = AppEntryTimeContract.AppEntryTime.COMPLEXITY + " = " + complexity + " AND "
                 + AppEntryTimeContract.AppEntryTime.LEVEL + " = " + level ;
 
+        // remove from DB
         db.delete(AppEntryTimeContract.AppEntryTime.TABLE_NAME, selection, null);
     }
 
@@ -104,13 +106,14 @@ public class AppEntryTimeDAL {
         return c;
     }
 
-    // TODO : remove this function , only for test
+
     // get record according to complexity and level
     public String getRecord(int complexity , int level){
 
         String timeString = str_init;
 
-        Cursor c = getRow(complexity, level); //get cursor on start row
+        //get cursor on start row
+        Cursor c = getRow(complexity, level);
 
         if (c != null) {
             while (c.moveToNext()) {
@@ -131,7 +134,7 @@ public class AppEntryTimeDAL {
 
     /************************************************************************/
 
-   // TODO : remove this function  , only for test
+   /*// TODO : remove this function  , only for test
     public Cursor getAllDBCursor(){
         SQLiteDatabase db = helper.getWritableDatabase();
         // get all DB
@@ -191,7 +194,7 @@ public class AppEntryTimeDAL {
         }
         return entryTimes;
     }
-
+*/
 
 /*****************************************************************/
 
