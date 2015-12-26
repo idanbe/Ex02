@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
+
+
         // create dal
         dal = new AppEntryTimeDAL(this);
 
@@ -110,13 +112,18 @@ public class MainActivity extends AppCompatActivity {
             complexity = bundle.getString(Ryy);
 
             // if user not enter parameters to level or complexity
-            if(complexity.equals(RESTART_SETTING) ){
-                complexity = RESTART_COMPLEXITY;
+            try {
+                if (complexity.equals(RESTART_SETTING)) {
+                    complexity = RESTART_COMPLEXITY;
+                }
+                if (level.equals(RESTART_SETTING)) {
+                    level = RESTART_LEVEL;
+                }
             }
-            if(level.equals(RESTART_SETTING)){
+            catch (Exception e){
+                complexity = RESTART_COMPLEXITY;
                 level = RESTART_LEVEL;
             }
-
             // set complexity number for draw circle
             cv.set_complexity(Integer.parseInt(complexity));
 

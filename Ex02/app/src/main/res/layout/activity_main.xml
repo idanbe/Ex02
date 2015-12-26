@@ -72,6 +72,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/text_time2"
         android:hint="@string/text_time2"
+        android:text="@string/str_init"
         android:layout_below="@+id/text_time1"
         android:layout_alignLeft="@+id/text_time1"
         android:layout_alignStart="@+id/text_time1"
