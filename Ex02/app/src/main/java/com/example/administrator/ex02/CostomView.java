@@ -30,9 +30,7 @@ public class CostomView extends View {
     private int[] ArrY = {70,70,70,240,240,240,420,420,420,590,590,590,760,760,760};
     private int num_loc=15;
     private boolean[] location; //this array indicate if location is clear to draw
-
-
-
+    
 
     // constructor A
     public CostomView(Context context) {
@@ -85,7 +83,6 @@ public class CostomView extends View {
         canvas.drawRect(left_rect + rect_x, top_rect + rect_y, right_rect + rect_x, bottom_rect + rect_y, paint);
 
         //draw circle
-        System.out.println("!! complexity = " + complexity);
         for(i=zero ; i <complexity; i++)
         {
             rand = random.nextInt(num_loc) ;
